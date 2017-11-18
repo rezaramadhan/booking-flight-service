@@ -1,8 +1,11 @@
 package id.booking.flight.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Map;
+
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,6 +24,8 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import id.booking.flight.helper.MySQLAccess;
+
 @Entity
 @Table(name = "users")
 @XmlRootElement
@@ -33,8 +38,10 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "User.findByToken", query = "SELECT u FROM User u WHERE u.token = :token")
     , @NamedQuery(name = "User.findByValidDate", query = "SELECT u FROM User u WHERE u.validDate = :validDate")})
 public class User implements Serializable {
-
     private static final long serialVersionUID = 1L;
+    private static final MySQLAccess sqlAccessor = new MySQLAccess();
+    private static final String dbName = "booking_domain";
+   
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -64,27 +71,49 @@ public class User implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private Collection<Booking> bookingCollection;
 
-    public User() {
-    }
+//    public User() {
+//    }
 
-    public User(Integer id) {
-        this.id = id;
-    }
+//    public User(Integer id) {
+//        this.id = id;
+//    }
 
-    public User(Integer id, String username, String name, String password) {
-        this.id = id;
+    public User(String username, String name, String password) {
         this.username = username;
         this.name = name;
         this.password = password;
+        
+        String query = "insert into users values(default, '" + username + "', '" + name +
+        		"', '" + password + "')";
+        try {
+			sqlAccessor.runQuery(dbName, query);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     public Integer getId() {
-        return id;
+    		if (id == null) {
+			String query = "select Id from users where Username = '" + this.username + "' and "
+			+ "Name = '" + this.name + "' and Password = '" + this.password + "'";
+			try {
+				ArrayList<Map<String, String>> result = sqlAccessor.runSelectQuery(dbName, query);
+				id = Integer.parseInt(result.get(0).get("Id"));
+				return id;
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return -1;
+			}
+		} else {
+			return id;
+		}
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+//    public void setId(Integer id) {
+//        this.id = id;
+//    }
 
     public String getUsername() {
         return username;
@@ -92,6 +121,14 @@ public class User implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
+        
+        String query = "update airports set Username = '" + username + "' where Id = " + this.id;
+        try {
+			sqlAccessor.runQuery(dbName, query);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     public String getName() {
@@ -100,6 +137,14 @@ public class User implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+        
+        String query = "update airports set Name = '" + name + "' where Id = " + this.id;
+        try {
+			sqlAccessor.runQuery(dbName, query);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     public String getPassword() {
@@ -108,6 +153,14 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+        
+        String query = "update airports set Password = '" + password + "' where Id = " + this.id;
+        try {
+			sqlAccessor.runQuery(dbName, query);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     public String getToken() {
@@ -116,6 +169,14 @@ public class User implements Serializable {
 
     public void setToken(String token) {
         this.token = token;
+        
+        String query = "update airports set Token = '" + token + "' where Id = " + this.id;
+        try {
+			sqlAccessor.runQuery(dbName, query);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     public Date getValidDate() {
@@ -124,6 +185,14 @@ public class User implements Serializable {
 
     public void setValidDate(Date validDate) {
         this.validDate = validDate;
+        
+        String query = "update airports set ValidDate = " + validDate + " where Id = " + this.id;
+        try {
+			sqlAccessor.runQuery(dbName, query);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     @XmlTransient
@@ -157,7 +226,7 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "com.entity.User[ id=" + id + " ]";
+        return "id.booking.flight.entity.User[id=" + id + "]";
     }
     
 }

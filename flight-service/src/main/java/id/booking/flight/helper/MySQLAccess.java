@@ -1,12 +1,16 @@
 package id.booking.flight.helper;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Date;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MySQLAccess {
     private Connection connect = null;
@@ -14,16 +18,26 @@ public class MySQLAccess {
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
 
-    public void readDatabase(String tableName, String query) throws Exception {
+    public void runQuery(String dbName, String query) throws Exception {
     		try {
             Class.forName("com.mysql.jdbc.Driver");
             connect = DriverManager
-                    .getConnection("jdbc:mysql://localhost/" + tableName
+                    .getConnection("jdbc:mysql://localhost/" + dbName
                     		+ "?user=root&password=");
             statement = connect.createStatement();
-            resultSet = statement
-                    .executeQuery(query);
-//            writeResultSet(resultSet);
+            
+          // PreparedStatements can use variables and are more efficient
+            preparedStatement = connect
+              .prepareStatement(query);
+//          preparedStatement.setString(1, "atikafrds");
+//          preparedStatement.setString(2, "Atika Firdaus");
+//          preparedStatement.setString(3, "123456");
+//          preparedStatement.setString(4, "abcdef");
+//          preparedStatement.setDate(5, new Date(2017, 11, 16));
+          preparedStatement.executeUpdate();
+            
+//            resultSet = statement.executeQuery(query);
+//            System.out.println(resultSet);
             System.out.println("Query executed successfully.");
         } catch (Exception e) {
         		System.out.println("Query execute failed.");
@@ -31,6 +45,37 @@ public class MySQLAccess {
         } finally {
             close();
         }
+    }
+    
+    public ArrayList<Map<String, String>> runSelectQuery(String dbName, String query) throws Exception {
+    		ArrayList<Map<String, String>> results = new ArrayList<>();
+
+    		try {
+	        Class.forName("com.mysql.jdbc.Driver");
+	        connect = DriverManager
+	                .getConnection("jdbc:mysql://localhost/" + dbName
+	                		+ "?user=root&password=");
+	        statement = connect.createStatement();
+	        resultSet = statement.executeQuery(query);
+	        while (resultSet.next()) {
+	        		ResultSetMetaData meta = resultSet.getMetaData();
+	        		Map<String, String> resultMap = new HashMap<>();
+	        		
+	        		for (int i = 1; i <= meta.getColumnCount(); i++) {                			
+	        			resultMap.put(meta.getColumnLabel(i), resultSet.getString(i));
+	        		}
+	        		
+	        		results.add(resultMap);
+	        }
+	        System.out.println("Query executed successfully.");
+        } catch (Exception e) {
+        		System.out.println("Query execute failed.");
+            throw e;
+        } finally {
+            close();
+        }
+    		
+    		return results;
     }
     
 //    public void readDataBase() throws Exception {
@@ -81,31 +126,31 @@ public class MySQLAccess {
 //
 //    }
 
-    private void writeMetaData(ResultSet resultSet) throws SQLException {
-        System.out.println("The columns in the table are: ");
-        System.out.println("Table: " + resultSet.getMetaData().getTableName(1));
-        for  (int i = 1; i<= resultSet.getMetaData().getColumnCount(); i++){
-            System.out.println("Column " + i + ": "+ resultSet.getMetaData().getColumnName(i));
-        }
-    }
+//    private void writeMetaData(ResultSet resultSet) throws SQLException {
+//        System.out.println("The columns in the table are: ");
+//        System.out.println("Table: " + resultSet.getMetaData().getTableName(1));
+//        for  (int i = 1; i<= resultSet.getMetaData().getColumnCount(); i++){
+//            System.out.println("Column " + i + ": "+ resultSet.getMetaData().getColumnName(i));
+//        }
+//    }
 
-    private void writeResultSet(ResultSet resultSet) throws SQLException {
-        // ResultSet is initially before the first data set
-        while (resultSet.next()) {
-            // It is possible to get the columns via name
-            // also possible to get the columns via the column number
-            // which starts at 1
-            // e.g. resultSet.getSTring(2);
-            int id = resultSet.getInt("Id");
-            String username = resultSet.getString("Username");
-            String name = resultSet.getString("Name");
-            String password = resultSet.getString("Password");
-            System.out.println("Id" + id);
-            System.out.println("Username: " + username);
-            System.out.println("Name: " + name);
-            System.out.println("Password: " + password);
-        }
-    }
+//    private void writeResultSet(ResultSet resultSet) throws SQLException {
+//        // ResultSet is initially before the first data set
+//        while (resultSet.next()) {
+//            // It is possible to get the columns via name
+//            // also possible to get the columns via the column number
+//            // which starts at 1
+//            // e.g. resultSet.getSTring(2);
+//            int id = resultSet.getInt("Id");
+//            String username = resultSet.getString("Username");
+//            String name = resultSet.getString("Name");
+//            String password = resultSet.getString("Password");
+//            System.out.println("Id" + id);
+//            System.out.println("Username: " + username);
+//            System.out.println("Name: " + name);
+//            System.out.println("Password: " + password);
+//        }
+//    }
 
     private void close() {
         try {

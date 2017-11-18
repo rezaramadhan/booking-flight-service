@@ -14,6 +14,12 @@ public class Flight {
 	private int price;
 	
 	public Flight() {
-		
+		code = "";
+		flightClass = "";
+		origin = "";
+		destination = "";
+		departTime = new DateTime();
+		duration = new Time(0, 0, 0);
+		price = 0;
 	}
 }

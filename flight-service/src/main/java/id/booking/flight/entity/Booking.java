@@ -1,6 +1,9 @@
 package id.booking.flight.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Map;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,17 +18,21 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import id.booking.flight.helper.MySQLAccess;
 
 @Entity
 @Table(name = "bookings")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Booking.findAll", query = "SELECT b FROM Booking b")
-    , @NamedQuery(name = "Booking.findById", query = "SELECT b FROM Booking b WHERE b.id = :id")
-    , @NamedQuery(name = "Booking.findByStatus", query = "SELECT b FROM Booking b WHERE b.status = :status")
-    , @NamedQuery(name = "Booking.findByPassengerName", query = "SELECT b FROM Booking b WHERE b.passengerName = :passengerName")})
+    , @NamedQuery(name = "Booking.findById", query = "SELECT b FROM Booking b WHERE b.Id = :Id")
+    , @NamedQuery(name = "Booking.findByStatus", query = "SELECT b FROM Booking b WHERE b.Status = :Status")
+    , @NamedQuery(name = "Booking.findByPassengerName", query = "SELECT b FROM Booking b WHERE b.PassengerName = :PassengerName")})
 public class Booking implements Serializable {
     private static final long serialVersionUID = 1L;
+    private static final MySQLAccess sqlAccessor = new MySQLAccess();
+    private static final String dbName = "booking_domain";
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -48,26 +55,52 @@ public class Booking implements Serializable {
     @ManyToOne(optional = false)
     private User userId;
 
-    public Booking() {
-    }
+//    public Booking() {
+//    	
+//    }
 
-    public Booking(Integer id) {
-        this.id = id;
-    }
+//    public Booking(Integer id) {
+//        this.id = id;
+//    }
 
-    public Booking(Integer id, String status, String passengerName) {
-        this.id = id;
+    public Booking(String status, String passengerName, Flight flightId, User userId) {
         this.status = status;
         this.passengerName = passengerName;
+        this.flightId = flightId;
+        this.userId = userId;
+        
+        String query = "insert into bookings values(default, '" + status + "', '" + passengerName +
+        		"', " + flightId.getId() + ", " + userId.getId() + ")";
+        try {
+			sqlAccessor.runQuery(dbName, query);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
-
+    
     public Integer getId() {
-        return id;
-    }
+    		if (id == null) {
+    			String query = "select Id from bookings where Status = '" + this.status + "' and "
+				+ "PassengerName = '" + this.passengerName + "' and FlightId = " + this.flightId.getId()
+				+ " and UserId = " + this.userId.getId();
+    			try {
+				ArrayList<Map<String, String>> result = sqlAccessor.runSelectQuery(dbName, query);
+				id = Integer.parseInt(result.get(0).get("Id"));
+				return id;
+    			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return -1;
+			}
+    		} else {
+    			return id;
+    		}
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+//    public void setId(Integer id) {
+//        this.id = id;
+//    }
 
     public String getStatus() {
         return status;
@@ -75,6 +108,14 @@ public class Booking implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+        
+        String query = "update bookings set Status = '" + status + "' where Id = " + this.id;
+        try {
+			sqlAccessor.runQuery(dbName, query);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     public String getPassengerName() {
@@ -83,6 +124,14 @@ public class Booking implements Serializable {
 
     public void setPassengerName(String passengerName) {
         this.passengerName = passengerName;
+        
+        String query = "update bookings set PassengerName = '" + passengerName + "' where Id = " + this.id;
+        try {
+			sqlAccessor.runQuery(dbName, query);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     public Flight getFlightId() {
@@ -91,6 +140,14 @@ public class Booking implements Serializable {
 
     public void setFlightId(Flight flightId) {
         this.flightId = flightId;
+        
+        String query = "update bookings set FlightId = " + flightId.getId() + " where Id = " + this.id;
+        try {
+			sqlAccessor.runQuery(dbName, query);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     public User getUserId() {
@@ -99,6 +156,14 @@ public class Booking implements Serializable {
 
     public void setUserId(User userId) {
         this.userId = userId;
+        
+        String query = "update bookings set UserId = " + userId.getId() + " where Id = " + this.id;
+        try {
+			sqlAccessor.runQuery(dbName, query);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     @Override
@@ -123,7 +188,7 @@ public class Booking implements Serializable {
 
     @Override
     public String toString() {
-        return "com.entity.Booking[ id=" + id + " ]";
+        return "id.booking.flight.entity.Booking[id=" + id + "]";
     }
     
 }

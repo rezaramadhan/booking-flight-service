@@ -1,7 +1,10 @@
 package id.booking.flight.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
+
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,6 +21,8 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import id.booking.flight.helper.MySQLAccess;
+
 @Entity
 @Table(name = "locations")
 @XmlRootElement
@@ -27,8 +32,10 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Location.findByProvince", query = "SELECT l FROM Location l WHERE l.province = :province")
     , @NamedQuery(name = "Location.findByTown", query = "SELECT l FROM Location l WHERE l.town = :town")})
 public class Location implements Serializable {
-
     private static final long serialVersionUID = 1L;
+    private static final MySQLAccess sqlAccessor = new MySQLAccess();
+    private static final String dbName = "booking_domain";
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -47,26 +54,47 @@ public class Location implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "locationId")
     private Collection<Airport> airportCollection;
 
-    public Location() {
-    }
+//    public Location() {
+//    }
 
-    public Location(Integer id) {
-        this.id = id;
-    }
+//    public Location(Integer id) {
+//        this.id = id;
+//    }
 
-    public Location(Integer id, String province, String town) {
-        this.id = id;
+    public Location(String province, String town) {
         this.province = province;
         this.town = town;
+        
+        String query = "insert into locations values(default, '" + province + "', '" + town + "')";
+        try {
+			sqlAccessor.runQuery(dbName, query);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     public Integer getId() {
-        return id;
+    		if (id == null) {
+			String query = "select Id from locations where Province = '" + this.province + "' and "
+			+ "Town = '" + this.town + "'";
+			try {
+				ArrayList<Map<String, String>> result = sqlAccessor.runSelectQuery(dbName, query);
+				id = Integer.parseInt(result.get(0).get("Id"));
+				return id;
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return -1;
+			}
+		} else {
+			return id;
+		}
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+//    public void setId(Integer id) {
+//        this.id = id;
+//    }
 
     public String getProvince() {
         return province;
@@ -74,6 +102,14 @@ public class Location implements Serializable {
 
     public void setProvince(String province) {
         this.province = province;
+        
+        String query = "update locations set Province = '" + province + "' where Id = " + this.id;
+        try {
+			sqlAccessor.runQuery(dbName, query);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     public String getTown() {
@@ -82,6 +118,14 @@ public class Location implements Serializable {
 
     public void setTown(String town) {
         this.town = town;
+        
+        String query = "update locations set Town = '" + town + "' where Id = " + this.id;
+        try {
+			sqlAccessor.runQuery(dbName, query);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     @XmlTransient
@@ -115,7 +159,7 @@ public class Location implements Serializable {
 
     @Override
     public String toString() {
-        return "com.entity.Location[ id=" + id + " ]";
+        return "id.booking.flight.entity.Location[id=" + id + "]";
     }
     
 }

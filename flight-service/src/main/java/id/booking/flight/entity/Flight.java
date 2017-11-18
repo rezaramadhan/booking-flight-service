@@ -22,6 +22,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import id.booking.flight.helper.MySQLAccess;
 
 @Entity
 @Table(name = "flight")
@@ -35,8 +36,10 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Flight.findByQuality", query = "SELECT f FROM Flight f WHERE f.quality = :quality")
     , @NamedQuery(name = "Flight.findByBoardingTime", query = "SELECT f FROM Flight f WHERE f.boardingTime = :boardingTime")})
 public class Flight implements Serializable {
-
     private static final long serialVersionUID = 1L;
+    private static final MySQLAccess sqlAccessor = new MySQLAccess();
+    private static final String dbName = "booking_domain";
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -74,29 +77,42 @@ public class Flight implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "flightId")
     private Collection<Booking> bookingCollection;
 
-    public Flight() {
-    }
+//    public Flight() {
+//    }
 
-    public Flight(Integer id) {
-        this.id = id;
-    }
+//    public Flight(Integer id) {
+//        this.id = id;
+//    }
 
-    public Flight(Integer id, int quota, String company, double price, String quality, Date boardingTime) {
+    public Flight(Integer id, int quota, String company, double price, String quality, Date boardingTime,
+    		Airport departureId, Airport destinationId) {
         this.id = id;
         this.quota = quota;
         this.company = company;
         this.price = price;
         this.quality = quality;
         this.boardingTime = boardingTime;
+        this.departureId = departureId;
+        this.destinationId = destinationId;
+        
+        String query = "insert into flight values(" + id + ", " + quota + ", '" + company + "', " +
+        		price + ", '" + quality + "', " + boardingTime + ", " + departureId.getId() + ", " +
+        		destinationId.getId() + ")";
+        try {
+			sqlAccessor.runQuery(dbName, query);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+//    public void setId(Integer id) {
+//        this.id = id;
+//    }
 
     public int getQuota() {
         return quota;
@@ -104,6 +120,14 @@ public class Flight implements Serializable {
 
     public void setQuota(int quota) {
         this.quota = quota;
+        
+        String query = "update flight set Quota = " + quota + " where Id = " + this.id;
+        try {
+			sqlAccessor.runQuery(dbName, query);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     public String getCompany() {
@@ -112,6 +136,14 @@ public class Flight implements Serializable {
 
     public void setCompany(String company) {
         this.company = company;
+        
+        String query = "update flight set Company = '" + company + "' where Id = " + this.id;
+        try {
+			sqlAccessor.runQuery(dbName, query);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     public double getPrice() {
@@ -120,6 +152,14 @@ public class Flight implements Serializable {
 
     public void setPrice(double price) {
         this.price = price;
+        
+        String query = "update flight set Price = " + price + " where Id = " + this.id;
+        try {
+			sqlAccessor.runQuery(dbName, query);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     public String getQuality() {
@@ -128,6 +168,14 @@ public class Flight implements Serializable {
 
     public void setQuality(String quality) {
         this.quality = quality;
+        
+        String query = "update flight set Quality = '" + quality + "' where Id = " + this.id;
+        try {
+			sqlAccessor.runQuery(dbName, query);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     public Date getBoardingTime() {
@@ -136,6 +184,14 @@ public class Flight implements Serializable {
 
     public void setBoardingTime(Date boardingTime) {
         this.boardingTime = boardingTime;
+        
+        String query = "update flight set BoardingTime = " + boardingTime + " where Id = " + this.id;
+        try {
+			sqlAccessor.runQuery(dbName, query);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     public Airport getDepartureId() {
@@ -144,6 +200,15 @@ public class Flight implements Serializable {
 
     public void setDepartureId(Airport departureId) {
         this.departureId = departureId;
+        
+        String query = "update flight set DepartureId = " + departureId.getId() + " where Id = " +
+        		this.id;
+        try {
+			sqlAccessor.runQuery(dbName, query);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     public Airport getDestinationId() {
@@ -152,6 +217,15 @@ public class Flight implements Serializable {
 
     public void setDestinationId(Airport destinationId) {
         this.destinationId = destinationId;
+        
+        String query = "update flight set DestinationId = " + destinationId.getId() + " where Id = "
+        		+ this.id;
+        try {
+			sqlAccessor.runQuery(dbName, query);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     @XmlTransient
@@ -185,7 +259,7 @@ public class Flight implements Serializable {
 
     @Override
     public String toString() {
-        return "com.entity.Flight[ id=" + id + " ]";
+        return "id.booking.flight.entity.Flight[id=" + id + "]";
     }
     
 }
