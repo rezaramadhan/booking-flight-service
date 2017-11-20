@@ -17,7 +17,7 @@ public class PaymentManagementImpl implements PaymentManagementService {
 		}
 		
 		try {
-			System.out.println("send invoice to user ");
+			invoice_impl.sendInvoice(invoice.getUser(), invoice);
 		} catch (Exception e) {
 			invoice.setPaid(false);
 			return false;
