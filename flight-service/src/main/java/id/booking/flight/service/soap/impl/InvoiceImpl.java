@@ -27,8 +27,12 @@ public class InvoiceImpl implements InvoiceService {
 
 	@Override
 	public boolean deleteInvoice(Invoice invoice) {
-		invoice.delete();
-		return false;
+		try {
+			invoice.delete();
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
 	}
 
 	
@@ -37,8 +41,12 @@ public class InvoiceImpl implements InvoiceService {
 	@Override
 	public boolean sendInvoice(User customer, Invoice invoice) {
 		// TODO Auto-generated method stub
-		System.out.println("Sending invoice " + invoice);
-		System.out.println("to customer " + customer);
+		try {
+			System.out.println("Sending invoice " + invoice);
+			System.out.println("to customer " + customer);
+		} catch (Exception e) {
+			return false;
+		}
 		return true;
 	}
 
