@@ -6,6 +6,6 @@ import id.booking.flight.entity.User;
 
 public interface BookingService {
 	public Booking createBooking(User customer, Flight flight, String passengerName);
-	public Booking modifyBooking(Booking booking);
+	public Booking modifyBooking(Booking booking, Flight flight, String passangerName);
 	public boolean cancelBooking(Booking booking);
 }

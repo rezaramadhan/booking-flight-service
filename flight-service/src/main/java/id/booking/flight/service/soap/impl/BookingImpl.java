@@ -8,21 +8,26 @@ import id.booking.flight.service.entity.BookingService;
 public class BookingImpl implements BookingService {
 
 	@Override
-	public Booking createBooking(User customer, Flight flight, String passengerName) {
-		// TODO Auto-generated method stub
-		return null;
+	public Booking createBooking(User user, Flight flight, String passengerName) {
+		Booking newBooking = new Booking("unpaid", passengerName, flight, user);
+		return newBooking;
 	}
 
 	@Override
-	public Booking modifyBooking(Booking booking) {
-		// TODO Auto-generated method stub
-		return null;
+	public Booking modifyBooking(Booking booking, Flight flight, String passengerName) {
+		booking.setFlightId(flight);
+		booking.setPassengerName(passengerName);
+		return booking;
 	}
 
 	@Override
 	public boolean cancelBooking(Booking booking) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			booking.deleteBooking();
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
 	}
 
 }

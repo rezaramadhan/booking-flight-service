@@ -1,11 +1,11 @@
 package id.booking.flight.service.task;
 
-import id.booking.flight.entity.Receipt;
+import id.booking.flight.entity.Invoice;
 
 public interface PaymentManagementService {
 	//set invoice jadi sudah dibayar
-	public boolean receivePaymentData(Receipt invoice);
+	public boolean receivePaymentData(Invoice invoice);
 	
 	//manggil service luar, simulasiin dulu aja
-	public boolean createPaymentRequest(Receipt invoice);
+	public boolean createPaymentRequest(Invoice invoice);
 }

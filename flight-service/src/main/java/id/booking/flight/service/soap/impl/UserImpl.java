@@ -8,15 +8,20 @@ import id.booking.flight.service.entity.UserService;
 public class UserImpl implements UserService {
 
 	@Override
-	public boolean modifyUserData(User data) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean modifyUserData(User user, String password, String fullName) {
+		try	{
+			user.setPassword(password);
+			user.setName(fullName);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override
-	public boolean createNewUser(String fullName, String username, String Password, Date validDate) {
-		// TODO Auto-generated method stub
-		return false;
+	public User createNewUser(String fullName, String username, String password) {
+		User newUser = new User(username, fullName, password);
+		return newUser;
 	}
 
 }

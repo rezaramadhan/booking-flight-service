@@ -7,8 +7,7 @@ public class CheckFlightSeatImpl implements CheckFlightSeatService {
 
 	@Override
 	public int checkSeat(Flight flight) {
-		// TODO Auto-generated method stub
-		return 0;
+		return flight.getQuota();
 	}
 
 }

@@ -191,5 +191,15 @@ public class Booking implements Serializable {
         return "id.booking.flight.entity.Booking[id=" + id + "]";
     }
     
+    public void deleteBooking() {
+    	 String query = "DELETE FROM bookings WHERE Id = '" + this.id;
+         try {
+ 			sqlAccessor.runQuery(dbName, query);
+ 		} catch (Exception e) {
+ 			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		}
+    }
+    
 }
 

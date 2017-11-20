@@ -6,5 +6,5 @@ import id.booking.flight.entity.Airport;
 import id.booking.flight.entity.Flight;
 
 public interface FlightSearchService {
-	public Flight[] findFlightByBoarding(Date boardingTime, Airport departure, Airport destination);
+	public Flight[] findFlightByBoarding(Date boardingTimeMin, Date boardingTimeMax, Airport departure, Airport destination);
 }
