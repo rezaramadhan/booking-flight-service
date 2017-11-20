@@ -68,8 +68,6 @@ public class User implements Serializable {
     @Column(name = "validDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date validDate;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-    private Collection<Booking> bookingCollection;
 
     public User() {
     }
@@ -207,15 +205,6 @@ public class User implements Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    }
-
-    @XmlTransient
-    public Collection<Booking> getBookingCollection() {
-        return bookingCollection;
-    }
-
-    public void setBookingCollection(Collection<Booking> bookingCollection) {
-        this.bookingCollection = bookingCollection;
     }
 
     @Override

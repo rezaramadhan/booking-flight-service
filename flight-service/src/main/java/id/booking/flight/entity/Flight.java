@@ -86,9 +86,6 @@ public class Flight implements Serializable {
     @ManyToOne(optional = false)
     private Airport destinationId;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "flightId")
-    private Collection<Booking> bookingCollection;
-
     public Flight() {
     }
 
@@ -260,15 +257,6 @@ public class Flight implements Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    }
-
-    @XmlTransient
-    public Collection<Booking> getBookingCollection() {
-        return bookingCollection;
-    }
-
-    public void setBookingCollection(Collection<Booking> bookingCollection) {
-        this.bookingCollection = bookingCollection;
     }
 
     @Override

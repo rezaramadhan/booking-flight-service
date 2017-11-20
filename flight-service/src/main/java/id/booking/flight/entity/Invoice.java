@@ -1,12 +1,15 @@
 package id.booking.flight.entity;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Map;
 
 import id.booking.flight.helper.MySQLAccess;
 
-public class Invoice {
+public class Invoice implements Serializable {
+	private static final long serialVersionUID = -5577579081118070434L;
+	
 	private static final MySQLAccess sqlAccessor = new MySQLAccess();
     private static final String dbName = "booking_domain";
     
@@ -21,7 +24,6 @@ public class Invoice {
 	
 	public Invoice(int id) {
 		this.id = id;
-		
 		String dbName = "booking_domain";
         String query = "select * from flight where id = " +id +"";
         Map<String, String> results;

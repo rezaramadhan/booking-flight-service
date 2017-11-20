@@ -46,10 +46,7 @@ public class Airport implements Serializable {
     @Size(min = 1, max = 64)
     @Column(name = "Name")
     private String name;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "departureId")
-    private Collection<Flight> flightsByDeparture;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "destinationId")
-    private Collection<Flight> flightsByDestination;
+    
     @JoinColumn(name = "LocationId", referencedColumnName = "Id")
     @ManyToOne(optional = false)
     private Location locationId;
@@ -126,24 +123,6 @@ public class Airport implements Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    }
-
-    @XmlTransient
-    public Collection<Flight> getFlightsByDeparture() {
-        return flightsByDeparture;
-    }
-
-    public void setFlightsByDeparture(Collection<Flight> flightsByDeparture) {
-        this.flightsByDeparture = flightsByDeparture;
-    }
-
-    @XmlTransient
-    public Collection<Flight> getFlightsByDestination() {
-        return flightsByDestination;
-    }
-
-    public void setFlightsByDestination(Collection<Flight> flightsByDestination) {
-        this.flightsByDestination = flightsByDestination;
     }
 
     public Location getLocationId() {

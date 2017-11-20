@@ -51,8 +51,6 @@ public class Location implements Serializable {
     @Size(min = 1, max = 25)
     @Column(name = "Town")
     private String town;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "locationId")
-    private Collection<Airport> airportCollection;
 
     public Location() {
     	
@@ -136,15 +134,6 @@ public class Location implements Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    }
-
-    @XmlTransient
-    public Collection<Airport> getAirportCollection() {
-        return airportCollection;
-    }
-
-    public void setAirportCollection(Collection<Airport> airportCollection) {
-        this.airportCollection = airportCollection;
     }
 
     @Override
