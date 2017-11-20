@@ -52,7 +52,7 @@ public class FlightImpl implements FlightService {
 	 * */
 	@Override
 	public Flight[] findPriceRange(int min, int max) {
-        String query = "select * from flight where Price <= " + max + " and Price >= " + min;
+        String query = "select Id from flight where Price <= " + max + " and Price >= " + min;
         ArrayList<Map<String, String>> results;
 		try {
 			results = sqlAccessor.runSelectQuery(dbName, query);
@@ -74,7 +74,7 @@ public class FlightImpl implements FlightService {
 	 * */
 	@Override
 	public Flight[] findBoardingTimeRange(Date boardTimeMin, Date boardTimeMax) {
-		String query = "select * from flight where BoardingTime <= " + boardTimeMax + " and BoardingTime >= " + boardTimeMin;
+		String query = "select Id from flight where BoardingTime <= " + boardTimeMax + " and BoardingTime >= " + boardTimeMin;
 		ArrayList<Map<String, String>> results;
 		try {
 			results = sqlAccessor.runSelectQuery(dbName, query);
@@ -95,7 +95,7 @@ public class FlightImpl implements FlightService {
 	 * */
 	@Override
 	public Flight[] findByDepartureLocation(Airport loc) {
-		String query = "select * from flight where DepartureId = " + loc.getId();
+		String query = "select Id from flight where DepartureId = " + loc.getId();
 		ArrayList<Map<String, String>> results;
 		try {
 			results = sqlAccessor.runSelectQuery(dbName, query);
@@ -116,7 +116,7 @@ public class FlightImpl implements FlightService {
 	 * */
 	@Override
 	public Flight[] findByDestinationLocation(Airport loc) {
-		String query = "select * from flight where DestinationId = " + loc.getId();
+		String query = "select Id from flight where DestinationId = " + loc.getId();
 		ArrayList<Map<String, String>> results;
 		try {
 			results = sqlAccessor.runSelectQuery(dbName, query);
