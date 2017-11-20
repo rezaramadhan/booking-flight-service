@@ -22,7 +22,6 @@ public class Invoice {
 	public Invoice(int id) {
 		this.id = id;
 		
-		String dbName = "booking_domain";
         String query = "select * from flight where id = " +id +"";
         Map<String, String> results;
 		try {
