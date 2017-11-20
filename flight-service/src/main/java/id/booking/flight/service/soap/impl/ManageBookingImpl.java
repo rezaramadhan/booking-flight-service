@@ -33,7 +33,7 @@ public class ManageBookingImpl implements ManageBookingService {
 		InvoiceImpl invoice_impl = new InvoiceImpl();
 		Invoice invoice;
 		try {
-			invoice = createInvoice(customer, booking);
+			invoice = invoice_impl.createInvoice(customer, booking);
 		} catch (Exception e) {
 			booking_impl.cancelBooking(booking);
 			return false;
