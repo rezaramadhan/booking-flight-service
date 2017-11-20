@@ -55,13 +55,26 @@ public class Booking implements Serializable {
     @ManyToOne(optional = false)
     private User userId;
 
-//    public Booking() {
-//    	
-//    }
+    public Booking() {
+    	
+    }
 
-//    public Booking(Integer id) {
-//        this.id = id;
-//    }
+    public Booking(Integer id) {
+        this.id = id;
+        String dbName = "booking_domain";
+        String query = "select * from booking where id = " +id +"";
+        Map<String, String> results;
+		try {
+			results = sqlAccessor.runSelectQuery(dbName, query).get(0);
+	        System.out.println(results);
+	        this.passengerName = results.get("PassengerName");
+	        this.flightId = new Flight(Integer.parseInt(results.get("FlightId")));
+	        this.userId = new User(Integer.parseInt(results.get("UserId")));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 
     public Booking(String status, String passengerName, Flight flightId, User userId) {
         this.status = status;

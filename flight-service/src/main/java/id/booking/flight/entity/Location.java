@@ -54,12 +54,26 @@ public class Location implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "locationId")
     private Collection<Airport> airportCollection;
 
-//    public Location() {
-//    }
+    public Location() {
+    	
+    }
 
-//    public Location(Integer id) {
-//        this.id = id;
-//    }
+    public Location(Integer id) {
+        this.id = id;
+
+        String dbName = "booking_domain";
+        String query = "select * from locations where id = " +id +"";
+        Map<String, String> results;
+		try {
+			results = sqlAccessor.runSelectQuery(dbName, query).get(0);
+	        System.out.println(results);
+	        this.province = results.get("Province");
+	        this.town = results.get("Town");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 
     public Location(String province, String town) {
         this.province = province;
@@ -91,10 +105,6 @@ public class Location implements Serializable {
 			return id;
 		}
     }
-
-//    public void setId(Integer id) {
-//        this.id = id;
-//    }
 
     public String getProvince() {
         return province;

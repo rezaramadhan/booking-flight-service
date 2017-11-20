@@ -1,8 +1,12 @@
 package id.booking.flight.entity;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Map;
+
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -85,12 +89,32 @@ public class Flight implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "flightId")
     private Collection<Booking> bookingCollection;
 
-//    public Flight() {
-//    }
+    public Flight() {
+    }
 
-//    public Flight(Integer id) {
-//        this.id = id;
-//    }
+    public Flight(Integer id) {
+        this.id = id;
+        
+        String dbName = "booking_domain";
+        String query = "select * from flight where id = " +id +"";
+        Map<String, String> results;
+		try {
+			results = sqlAccessor.runSelectQuery(dbName, query).get(0);
+	        System.out.println(results);
+	        this.quality = results.get("Quality");
+	        this.company = results.get("Company");
+	        this.price = Float.parseFloat(results.get("Price"));
+	        this.quota = Integer.parseInt(results.get("Quota"));
+	        this.departureId = new Airport(Integer.parseInt(results.get("DepartureId")));
+	        this.destinationId = new Airport(Integer.parseInt(results.get("DestinationId")));
+	        
+	        DateFormat df = new SimpleDateFormat("yyyy-MM-dd"); 
+	        this.boardingTime = df.parse(results.get("BoardingTime"));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 
     public Flight(Integer id, int quota, String company, double price, String quality, Date boardingTime,
     		Airport departureId, Airport destinationId) {
@@ -103,8 +127,10 @@ public class Flight implements Serializable {
         this.departureId = departureId;
         this.destinationId = destinationId;
         
+        String formattedDate = new SimpleDateFormat("yyyy-MM-dd").format(this.boardingTime);
+        System.out.println(formattedDate);
         String query = "insert into flight values(" + id + ", " + quota + ", '" + company + "', " +
-        		price + ", '" + quality + "', " + boardingTime + ", " + departureId.getId() + ", " +
+        		price + ", '" + quality + "', '" + formattedDate + "', " + departureId.getId() + ", " +
         		destinationId.getId() + ")";
         try {
 			sqlAccessor.runQuery(dbName, query);

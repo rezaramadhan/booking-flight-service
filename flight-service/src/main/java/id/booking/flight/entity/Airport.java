@@ -54,13 +54,27 @@ public class Airport implements Serializable {
     @ManyToOne(optional = false)
     private Location locationId;
 
-//    public Airport() {
-//    	
-//    }
+    public Airport() {
+    	
+    }
 
-//    public Airport(Integer id) {
-//        this.id = id;
-//    }
+    public Airport(Integer id) {
+    	this.id = id;
+        
+        String dbName = "booking_domain";
+        String query = "select * from airports where id = " +id +"";
+        Map<String, String> results;
+		try {
+			results = sqlAccessor.runSelectQuery(dbName, query).get(0);
+	        System.out.println(results);
+	        this.name = results.get("Name");
+	        String loc_id = results.get("LocationId");
+	        this.locationId = new Location(Integer.parseInt(loc_id));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 
     public Airport(String name, Location locationId) {
         this.name = name;

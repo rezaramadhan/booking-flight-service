@@ -71,19 +71,33 @@ public class User implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private Collection<Booking> bookingCollection;
 
-//    public User() {
-//    }
+    public User() {
+    }
 
-//    public User(Integer id) {
-//        this.id = id;
-//    }
+    public User(Integer id) {
+        this.id = id;
+        
+        String dbName = "booking_domain";
+        String query = "select * from users where id = " +id +"";
+        Map<String, String> results;
+		try {
+			results = sqlAccessor.runSelectQuery(dbName, query).get(0);
+	        System.out.println(results);
+	        this.name = results.get("Name");
+	        this.username = results.get("Username");
+	        this.password = results.get("Password");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 
     public User(String username, String name, String password) {
         this.username = username;
         this.name = name;
         this.password = password;
         
-        String query = "insert into users values(default, '" + username + "', '" + name +
+        String query = "insert into users (username, name, password) values('" + username + "', '" + name +
         		"', '" + password + "')";
         try {
 			sqlAccessor.runQuery(dbName, query);
@@ -122,7 +136,7 @@ public class User implements Serializable {
     public void setUsername(String username) {
         this.username = username;
         
-        String query = "update airports set Username = '" + username + "' where Id = " + this.id;
+        String query = "update users set Username = '" + username + "' where Id = " + this.id;
         try {
 			sqlAccessor.runQuery(dbName, query);
 		} catch (Exception e) {
@@ -138,7 +152,7 @@ public class User implements Serializable {
     public void setName(String name) {
         this.name = name;
         
-        String query = "update airports set Name = '" + name + "' where Id = " + this.id;
+        String query = "update users set Name = '" + name + "' where Id = " + this.id;
         try {
 			sqlAccessor.runQuery(dbName, query);
 		} catch (Exception e) {
@@ -154,7 +168,7 @@ public class User implements Serializable {
     public void setPassword(String password) {
         this.password = password;
         
-        String query = "update airports set Password = '" + password + "' where Id = " + this.id;
+        String query = "update users set Password = '" + password + "' where Id = " + this.id;
         try {
 			sqlAccessor.runQuery(dbName, query);
 		} catch (Exception e) {
@@ -170,7 +184,7 @@ public class User implements Serializable {
     public void setToken(String token) {
         this.token = token;
         
-        String query = "update airports set Token = '" + token + "' where Id = " + this.id;
+        String query = "update users set Token = '" + token + "' where Id = " + this.id;
         try {
 			sqlAccessor.runQuery(dbName, query);
 		} catch (Exception e) {
@@ -186,7 +200,7 @@ public class User implements Serializable {
     public void setValidDate(Date validDate) {
         this.validDate = validDate;
         
-        String query = "update airports set ValidDate = " + validDate + " where Id = " + this.id;
+        String query = "update users set ValidDate = " + validDate + " where Id = " + this.id;
         try {
 			sqlAccessor.runQuery(dbName, query);
 		} catch (Exception e) {

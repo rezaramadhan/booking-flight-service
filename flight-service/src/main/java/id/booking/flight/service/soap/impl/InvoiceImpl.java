@@ -11,19 +11,23 @@ public class InvoiceImpl implements InvoiceService {
 	 * */
 	@Override
 	public Invoice createInvoice(User customer, Booking booking) {
-		// TODO Auto-generated method stub
-		return null;
+		Invoice inv = new Invoice(customer, booking);
+		return inv;
 	}
 
 	@Override
 	public boolean setInvoicePaid(Invoice invoice) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			invoice.setPaid(true);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override
 	public boolean deleteInvoice(Invoice invoice) {
-		// TODO Auto-generated method stub
+		invoice.delete();
 		return false;
 	}
 
@@ -33,7 +37,9 @@ public class InvoiceImpl implements InvoiceService {
 	@Override
 	public boolean sendInvoice(User customer, Invoice invoice) {
 		// TODO Auto-generated method stub
-		return false;
+		System.out.println("Sending invoice " + invoice);
+		System.out.println("to customer " + customer);
+		return true;
 	}
 
 }
