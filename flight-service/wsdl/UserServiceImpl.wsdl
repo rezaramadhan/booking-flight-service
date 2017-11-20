@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://service.com" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://service.com" xmlns:intf="http://service.com" xmlns:tns1="http://entity.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://service.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://entity.com"/>
+   <element name="modifyUserData">
+    <complexType>
+     <sequence>
+      <element name="data" type="tns1:User"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="ArrayOf_xsd_string">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <element name="modifyUserDataResponse">
+    <complexType/>
+   </element>
+   <element name="getTicket">
+    <complexType>
+     <sequence>
+      <element name="user" type="tns1:User"/>
+      <element name="ticketId" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getTicketResponse">
+    <complexType>
+     <sequence>
+      <element name="getTicketReturn" type="tns1:Ticket"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getInvoice">
+    <complexType>
+     <sequence>
+      <element name="user" type="tns1:User"/>
+      <element name="ticketId" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getInvoiceResponse">
+    <complexType>
+     <sequence>
+      <element name="getInvoiceReturn" type="tns1:Invoice"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://entity.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://service.com"/>
+   <complexType name="User">
+    <sequence>
+     <element name="id" type="xsd:int"/>
+     <element name="name" nillable="true" type="xsd:string"/>
+     <element name="email" nillable="true" type="xsd:string"/>
+     <element name="phoneNumber" nillable="true" type="impl:ArrayOf_xsd_string"/>
+    </sequence>
+   </complexType>
+   <complexType name="Ticket">
+    <sequence>
+     <element name="id" type="xsd:int"/>
+     <element name="origin" nillable="true" type="xsd:string"/>
+     <element name="destination" nillable="true" type="xsd:string"/>
+     <element name="passengerName" nillable="true" type="xsd:string"/>
+     <element name="passengerPhoneNumber" nillable="true" type="xsd:string"/>
+     <element name="departureDateTime" nillable="true" type="xsd:string"/>
+     <element name="estimatedArrivalTime" nillable="true" type="xsd:string"/>
+     <element name="price" type="xsd:double"/>
+    </sequence>
+   </complexType>
+   <complexType name="Invoice">
+    <sequence>
+     <element name="id" type="xsd:int"/>
+     <element name="customer" nillable="true" type="tns1:User"/>
+     <element name="ticket" nillable="true" type="tns1:Ticket"/>
+    </sequence>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="modifyUserDataRequest">
+
+      <wsdl:part element="impl:modifyUserData" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getTicketResponse">
+
+      <wsdl:part element="impl:getTicketResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="modifyUserDataResponse">
+
+      <wsdl:part element="impl:modifyUserDataResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getTicketRequest">
+
+      <wsdl:part element="impl:getTicket" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getInvoiceResponse">
+
+      <wsdl:part element="impl:getInvoiceResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getInvoiceRequest">
+
+      <wsdl:part element="impl:getInvoice" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="UserServiceImpl">
+
+      <wsdl:operation name="modifyUserData">
+
+         <wsdl:input message="impl:modifyUserDataRequest" name="modifyUserDataRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:modifyUserDataResponse" name="modifyUserDataResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getTicket">
+
+         <wsdl:input message="impl:getTicketRequest" name="getTicketRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getTicketResponse" name="getTicketResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getInvoice">
+
+         <wsdl:input message="impl:getInvoiceRequest" name="getInvoiceRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getInvoiceResponse" name="getInvoiceResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="UserServiceImplSoapBinding" type="impl:UserServiceImpl">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="modifyUserData">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="modifyUserDataRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="modifyUserDataResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getTicket">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getTicketRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getTicketResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getInvoice">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getInvoiceRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getInvoiceResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="UserServiceImplService">
+
+      <wsdl:port binding="impl:UserServiceImplSoapBinding" name="UserServiceImpl">
+
+         <wsdlsoap:address location="http://localhost:8080/Flight/services/UserServiceImpl"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

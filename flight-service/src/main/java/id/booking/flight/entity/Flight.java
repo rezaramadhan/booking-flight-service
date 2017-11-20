@@ -45,35 +45,43 @@ public class Flight implements Serializable {
     @Basic(optional = false)
     @Column(name = "Id")
     private Integer id;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "Quota")
     private int quota;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 64)
     @Column(name = "Company")
     private String company;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "Price")
     private double price;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 25)
     @Column(name = "Quality")
     private String quality;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "BoardingTime")
     @Temporal(TemporalType.TIMESTAMP)
     private Date boardingTime;
+    
     @JoinColumn(name = "DepartureId", referencedColumnName = "Id")
     @ManyToOne(optional = false)
     private Airport departureId;
+    
     @JoinColumn(name = "DestinationId", referencedColumnName = "Id")
     @ManyToOne(optional = false)
     private Airport destinationId;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "flightId")
     private Collection<Booking> bookingCollection;
 

@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://service.com" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://service.com" xmlns:intf="http://service.com" xmlns:tns1="http://entity.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://service.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://entity.com"/>
+   <element name="createBooking">
+    <complexType>
+     <sequence>
+      <element name="customer" type="tns1:User"/>
+      <element maxOccurs="unbounded" name="tickets" type="tns1:Ticket"/>
+      <element name="invoice" type="tns1:Invoice"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="ArrayOf_xsd_string">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <element name="createBookingResponse">
+    <complexType>
+     <sequence>
+      <element name="createBookingReturn" type="tns1:Booking"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="ArrayOf_tns1_Ticket">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="tns1:Ticket"/>
+    </sequence>
+   </complexType>
+   <element name="modifyBooking">
+    <complexType>
+     <sequence>
+      <element name="booking" type="tns1:Booking"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="modifyBookingResponse">
+    <complexType>
+     <sequence>
+      <element name="modifyBookingReturn" type="tns1:Booking"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="cancelBooking">
+    <complexType>
+     <sequence>
+      <element name="booking" type="tns1:Booking"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="cancelBookingResponse">
+    <complexType>
+     <sequence>
+      <element name="cancelBookingReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://entity.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://service.com"/>
+   <complexType name="User">
+    <sequence>
+     <element name="id" type="xsd:int"/>
+     <element name="name" nillable="true" type="xsd:string"/>
+     <element name="email" nillable="true" type="xsd:string"/>
+     <element name="phoneNumber" nillable="true" type="impl:ArrayOf_xsd_string"/>
+    </sequence>
+   </complexType>
+   <complexType name="Ticket">
+    <sequence>
+     <element name="id" type="xsd:int"/>
+     <element name="origin" nillable="true" type="xsd:string"/>
+     <element name="destination" nillable="true" type="xsd:string"/>
+     <element name="passengerName" nillable="true" type="xsd:string"/>
+     <element name="passengerPhoneNumber" nillable="true" type="xsd:string"/>
+     <element name="departureDateTime" nillable="true" type="xsd:string"/>
+     <element name="estimatedArrivalTime" nillable="true" type="xsd:string"/>
+     <element name="price" type="xsd:double"/>
+    </sequence>
+   </complexType>
+   <complexType name="Invoice">
+    <sequence>
+     <element name="id" type="xsd:int"/>
+     <element name="customer" nillable="true" type="tns1:User"/>
+     <element name="ticket" nillable="true" type="tns1:Ticket"/>
+    </sequence>
+   </complexType>
+   <complexType name="Booking">
+    <sequence>
+     <element name="id" type="xsd:int"/>
+     <element name="customer" nillable="true" type="tns1:User"/>
+     <element name="bookedTickets" nillable="true" type="impl:ArrayOf_tns1_Ticket"/>
+     <element name="invoice" nillable="true" type="tns1:Invoice"/>
+    </sequence>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="cancelBookingResponse">
+
+      <wsdl:part element="impl:cancelBookingResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="createBookingRequest">
+
+      <wsdl:part element="impl:createBooking" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="modifyBookingResponse">
+
+      <wsdl:part element="impl:modifyBookingResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="createBookingResponse">
+
+      <wsdl:part element="impl:createBookingResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="modifyBookingRequest">
+
+      <wsdl:part element="impl:modifyBooking" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="cancelBookingRequest">
+
+      <wsdl:part element="impl:cancelBooking" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="BookingServiceImpl">
+
+      <wsdl:operation name="createBooking">
+
+         <wsdl:input message="impl:createBookingRequest" name="createBookingRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:createBookingResponse" name="createBookingResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="modifyBooking">
+
+         <wsdl:input message="impl:modifyBookingRequest" name="modifyBookingRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:modifyBookingResponse" name="modifyBookingResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cancelBooking">
+
+         <wsdl:input message="impl:cancelBookingRequest" name="cancelBookingRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:cancelBookingResponse" name="cancelBookingResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="BookingServiceImplSoapBinding" type="impl:BookingServiceImpl">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="createBooking">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="createBookingRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="createBookingResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="modifyBooking">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="modifyBookingRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="modifyBookingResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="cancelBooking">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="cancelBookingRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="cancelBookingResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="BookingServiceImplService">
+
+      <wsdl:port binding="impl:BookingServiceImplSoapBinding" name="BookingServiceImpl">
+
+         <wsdlsoap:address location="http://localhost:8080/Flight/services/BookingServiceImpl"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

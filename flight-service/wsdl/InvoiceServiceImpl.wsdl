@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://service.com" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://service.com" xmlns:intf="http://service.com" xmlns:tns1="http://entity.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://service.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://entity.com"/>
+   <element name="createInvoice">
+    <complexType>
+     <sequence>
+      <element name="customer" type="tns1:User"/>
+      <element name="ticket" type="tns1:Ticket"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="ArrayOf_xsd_string">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <element name="createInvoiceResponse">
+    <complexType>
+     <sequence>
+      <element name="createInvoiceReturn" type="tns1:Invoice"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="sendInvoice">
+    <complexType>
+     <sequence>
+      <element name="customer" type="tns1:User"/>
+      <element name="invoice" type="tns1:Invoice"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="sendInvoiceResponse">
+    <complexType>
+     <sequence>
+      <element name="sendInvoiceReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://entity.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://service.com"/>
+   <complexType name="User">
+    <sequence>
+     <element name="id" type="xsd:int"/>
+     <element name="name" nillable="true" type="xsd:string"/>
+     <element name="email" nillable="true" type="xsd:string"/>
+     <element name="phoneNumber" nillable="true" type="impl:ArrayOf_xsd_string"/>
+    </sequence>
+   </complexType>
+   <complexType name="Ticket">
+    <sequence>
+     <element name="id" type="xsd:int"/>
+     <element name="origin" nillable="true" type="xsd:string"/>
+     <element name="destination" nillable="true" type="xsd:string"/>
+     <element name="passengerName" nillable="true" type="xsd:string"/>
+     <element name="passengerPhoneNumber" nillable="true" type="xsd:string"/>
+     <element name="departureDateTime" nillable="true" type="xsd:string"/>
+     <element name="estimatedArrivalTime" nillable="true" type="xsd:string"/>
+     <element name="price" type="xsd:double"/>
+    </sequence>
+   </complexType>
+   <complexType name="Invoice">
+    <sequence>
+     <element name="id" type="xsd:int"/>
+     <element name="customer" nillable="true" type="tns1:User"/>
+     <element name="ticket" nillable="true" type="tns1:Ticket"/>
+    </sequence>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="createInvoiceRequest">
+
+      <wsdl:part element="impl:createInvoice" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="createInvoiceResponse">
+
+      <wsdl:part element="impl:createInvoiceResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="sendInvoiceResponse">
+
+      <wsdl:part element="impl:sendInvoiceResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="sendInvoiceRequest">
+
+      <wsdl:part element="impl:sendInvoice" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="InvoiceServiceImpl">
+
+      <wsdl:operation name="createInvoice">
+
+         <wsdl:input message="impl:createInvoiceRequest" name="createInvoiceRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:createInvoiceResponse" name="createInvoiceResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="sendInvoice">
+
+         <wsdl:input message="impl:sendInvoiceRequest" name="sendInvoiceRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:sendInvoiceResponse" name="sendInvoiceResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="InvoiceServiceImplSoapBinding" type="impl:InvoiceServiceImpl">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="createInvoice">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="createInvoiceRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="createInvoiceResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="sendInvoice">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="sendInvoiceRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="sendInvoiceResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="InvoiceServiceImplService">
+
+      <wsdl:port binding="impl:InvoiceServiceImplSoapBinding" name="InvoiceServiceImpl">
+
+         <wsdlsoap:address location="http://localhost:8080/Flight/services/InvoiceServiceImpl"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

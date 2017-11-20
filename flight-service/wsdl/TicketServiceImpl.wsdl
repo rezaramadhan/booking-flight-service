@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://service.com" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://service.com" xmlns:intf="http://service.com" xmlns:tns1="http://entity.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://service.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://entity.com"/>
+   <element name="sendTicket">
+    <complexType>
+     <sequence>
+      <element name="user" type="tns1:User"/>
+      <element name="ticket" type="tns1:Ticket"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="ArrayOf_xsd_string">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <element name="sendTicketResponse">
+    <complexType>
+     <sequence>
+      <element name="sendTicketReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="createTicket">
+    <complexType>
+     <sequence>
+      <element name="origin" type="xsd:string"/>
+      <element name="destination" type="xsd:string"/>
+      <element name="passengerName" type="xsd:string"/>
+      <element name="passengerPhoneNumber" type="xsd:string"/>
+      <element name="departureDateTime" type="xsd:string"/>
+      <element name="estimatedArrivalTime" type="xsd:string"/>
+      <element name="price" type="xsd:double"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="createTicketResponse">
+    <complexType>
+     <sequence>
+      <element name="createTicketReturn" type="tns1:Ticket"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://entity.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://service.com"/>
+   <complexType name="User">
+    <sequence>
+     <element name="id" type="xsd:int"/>
+     <element name="name" nillable="true" type="xsd:string"/>
+     <element name="email" nillable="true" type="xsd:string"/>
+     <element name="phoneNumber" nillable="true" type="impl:ArrayOf_xsd_string"/>
+    </sequence>
+   </complexType>
+   <complexType name="Ticket">
+    <sequence>
+     <element name="id" type="xsd:int"/>
+     <element name="origin" nillable="true" type="xsd:string"/>
+     <element name="destination" nillable="true" type="xsd:string"/>
+     <element name="passengerName" nillable="true" type="xsd:string"/>
+     <element name="passengerPhoneNumber" nillable="true" type="xsd:string"/>
+     <element name="departureDateTime" nillable="true" type="xsd:string"/>
+     <element name="estimatedArrivalTime" nillable="true" type="xsd:string"/>
+     <element name="price" type="xsd:double"/>
+    </sequence>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="sendTicketRequest">
+
+      <wsdl:part element="impl:sendTicket" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="createTicketRequest">
+
+      <wsdl:part element="impl:createTicket" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="sendTicketResponse">
+
+      <wsdl:part element="impl:sendTicketResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="createTicketResponse">
+
+      <wsdl:part element="impl:createTicketResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="TicketServiceImpl">
+
+      <wsdl:operation name="sendTicket">
+
+         <wsdl:input message="impl:sendTicketRequest" name="sendTicketRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:sendTicketResponse" name="sendTicketResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="createTicket">
+
+         <wsdl:input message="impl:createTicketRequest" name="createTicketRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:createTicketResponse" name="createTicketResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="TicketServiceImplSoapBinding" type="impl:TicketServiceImpl">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="sendTicket">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="sendTicketRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="sendTicketResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="createTicket">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="createTicketRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="createTicketResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="TicketServiceImplService">
+
+      <wsdl:port binding="impl:TicketServiceImplSoapBinding" name="TicketServiceImpl">
+
+         <wsdlsoap:address location="http://localhost:8080/Flight/services/TicketServiceImpl"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://service.com.src" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://service.com.src" xmlns:intf="http://service.com.src" xmlns:tns1="http://entity.com.src" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://service.com.src" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://entity.com.src"/>
+   <element name="receiveConfirmation">
+    <complexType>
+     <sequence>
+      <element name="invoice" type="tns1:Invoice"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="ArrayOf_xsd_string">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <element name="receiveConfirmationResponse">
+    <complexType/>
+   </element>
+   <element name="requestPayment">
+    <complexType>
+     <sequence>
+      <element name="invoice" type="tns1:Invoice"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="requestPaymentResponse">
+    <complexType/>
+   </element>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://entity.com.src" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://service.com.src"/>
+   <complexType name="User">
+    <sequence>
+     <element name="id" type="xsd:int"/>
+     <element name="name" nillable="true" type="xsd:string"/>
+     <element name="email" nillable="true" type="xsd:string"/>
+     <element name="phoneNumber" nillable="true" type="impl:ArrayOf_xsd_string"/>
+    </sequence>
+   </complexType>
+   <complexType name="Ticket">
+    <sequence>
+     <element name="id" type="xsd:int"/>
+     <element name="origin" nillable="true" type="xsd:string"/>
+     <element name="destination" nillable="true" type="xsd:string"/>
+     <element name="passengerName" nillable="true" type="xsd:string"/>
+     <element name="passengerPhoneNumber" nillable="true" type="xsd:string"/>
+     <element name="departureDateTime" nillable="true" type="xsd:string"/>
+     <element name="estimatedArrivalTime" nillable="true" type="xsd:string"/>
+     <element name="price" type="xsd:double"/>
+    </sequence>
+   </complexType>
+   <complexType name="Invoice">
+    <sequence>
+     <element name="id" type="xsd:int"/>
+     <element name="customer" nillable="true" type="tns1:User"/>
+     <element name="ticket" nillable="true" type="tns1:Ticket"/>
+    </sequence>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="requestPaymentResponse">
+
+      <wsdl:part element="impl:requestPaymentResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="receiveConfirmationRequest">
+
+      <wsdl:part element="impl:receiveConfirmation" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="receiveConfirmationResponse">
+
+      <wsdl:part element="impl:receiveConfirmationResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="requestPaymentRequest">
+
+      <wsdl:part element="impl:requestPayment" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="PaymentManagementServiceImpl">
+
+      <wsdl:operation name="receiveConfirmation">
+
+         <wsdl:input message="impl:receiveConfirmationRequest" name="receiveConfirmationRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:receiveConfirmationResponse" name="receiveConfirmationResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="requestPayment">
+
+         <wsdl:input message="impl:requestPaymentRequest" name="requestPaymentRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:requestPaymentResponse" name="requestPaymentResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="PaymentManagementServiceImplSoapBinding" type="impl:PaymentManagementServiceImpl">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="receiveConfirmation">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="receiveConfirmationRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="receiveConfirmationResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="requestPayment">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="requestPaymentRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="requestPaymentResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="PaymentManagementServiceImplService">
+
+      <wsdl:port binding="impl:PaymentManagementServiceImplSoapBinding" name="PaymentManagementServiceImpl">
+
+         <wsdlsoap:address location="http://tempuri.org/Flight/services/PaymentManagementServiceImpl"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>
