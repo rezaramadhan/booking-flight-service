@@ -58,7 +58,6 @@ public class Airport implements Serializable {
     public Airport(Integer id) {
     	this.id = id;
         
-        String dbName = "booking_domain";
         String query = "select * from airports where id = " +id +"";
         Map<String, String> results;
 		try {
@@ -166,5 +165,16 @@ public class Airport implements Serializable {
         return "id.booking.flight.entity.Airport[id=" + id + "]";
     }
     
+    public void setIdOnly(int id) {
+    		this.id = id;
+    }
+    
+    public void setNameOnly(String name) {
+    		this.name = name;
+    }
+    
+    public void setLocationOnly(Location location) {
+    		this.locationId = location;
+    }
 }
 

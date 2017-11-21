@@ -92,7 +92,6 @@ public class Flight implements Serializable {
     public Flight(Integer id) {
         this.id = id;
         
-        String dbName = "booking_domain";
         String query = "select * from flight where id = " +id +"";
         Map<String, String> results;
 		try {
@@ -284,6 +283,37 @@ public class Flight implements Serializable {
         return "id.booking.flight.entity.Flight[id=" + id + "]";
     }
     
+    public void setIdOnly(int id) {
+    		this.id = id;
+    }
+
+    public void setQuotaOnly(int quota) {
+		this.quota = quota;
+    }
+    
+    public void setCompanyOnly(String company) {
+    		this.company = company;
+    }
+    
+    public void setPriceOnly(double price) {
+    		this.price = price;
+    }
+    
+    public void setQualityOnly(String quality) {
+    		this.quality = quality;
+    }
+    
+    public void setBoardingTimeOnly(Date boardingTime) {
+    		this.boardingTime = boardingTime;
+    }    
+    
+    public void setDepartureIdOnly(Airport departureId) {
+    		this.departureId = departureId;
+    }
+    
+    public void setDestinationIdOnly(Airport destinationId) {
+		this.destinationId = destinationId;
+    }
 }
 
 

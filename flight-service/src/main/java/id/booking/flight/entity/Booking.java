@@ -61,7 +61,6 @@ public class Booking implements Serializable {
 
     public Booking(Integer id) {
         this.id = id;
-        String dbName = "booking_domain";
         String query = "select * from booking where id = " +id +"";
         Map<String, String> results;
 		try {

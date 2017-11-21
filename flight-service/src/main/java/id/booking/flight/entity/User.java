@@ -75,7 +75,6 @@ public class User implements Serializable {
     public User(Integer id) {
         this.id = id;
         
-        String dbName = "booking_domain";
         String query = "select * from users where id = " +id +"";
         Map<String, String> results;
 		try {
