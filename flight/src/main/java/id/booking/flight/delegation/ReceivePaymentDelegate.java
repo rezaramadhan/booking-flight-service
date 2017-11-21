@@ -8,19 +8,17 @@ import org.camunda.bpm.engine.impl.bpmn.delegate.JavaDelegateInvocation;
 
 import id.booking.flight.service.soap.impl.PaymentManagementImplProxy;
 
-public class CheckoutDelegate implements JavaDelegate {
+public class ReceivePaymentDelegate implements JavaDelegate{
 	
-	private final static Logger LOGGER = Logger.getLogger("CHECKOUT");
+	private final static Logger LOGGER = Logger.getLogger("RECEIVE-PAYMENT");
 
 	public void execute(DelegateExecution execution) throws Exception {
-		LOGGER.info("Calling class id.booking.flight.delegation.CheckoutDelegate");
+		LOGGER.info("Calling class id.booking.flight.delegation.ReceivePaymentDelegate");
 		
-		Integer user_id = (Integer) execution.getVariable("user_id");
-		String booking_code = (String) execution.getVariable("invoice_id");
-		
+//		String booking_code = (String) execution.getVariable("invoice_id");
 //		PaymentManagementImplProxy impl = new PaymentManagementImplProxy();
-//		boolean status = impl.createPaymentRequest(invoice);
+//		boolean status = impl.receivePaymentData(invoice);
 //		execution.setVariable("status", status);
-	}
 
+	}
 }
