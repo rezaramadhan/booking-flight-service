@@ -12,7 +12,7 @@ import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.camunda.bpm.engine.impl.bpmn.delegate.JavaDelegateInvocation;
 import id.booking.flight.entity.*;
 import id.booking.flight.service.soap.impl.FlightSearchImpl;
-import id.booking.flight.service.soap.impl.FlightSearchImplProxy;
+//import id.booking.flight.service.soap.impl.FlightSearchImplProxy;
 
 public class FlightSearchDelegate implements JavaDelegate{
 	
@@ -22,8 +22,8 @@ public class FlightSearchDelegate implements JavaDelegate{
 		LOGGER.info("Calling class id.booking.flight.delegation.FlightSearchDelegate");
 		LOGGER.info("Processing request by '" + execution.getVariable("customerId") + "'...");
 		
-		String origin = execution.getVariable("origin").toString();
-		String destination = execution.getVariable("destination").toString();
+		int origin = Integer.parseInt(execution.getVariable("origin").toString());
+		int destination = Integer.parseInt(execution.getVariable("destination").toString());
 
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd"); 
 		Date departureDateMin = df.parse(execution.getVariable("departureDateMax").toString());
@@ -34,13 +34,13 @@ public class FlightSearchDelegate implements JavaDelegate{
 //	    LOGGER.info("Searching flight with parameters origin: " + origin + " destination: " +
 //	    		destination + " departure date: " + departureDate	 + " number of passengers: " + childPsg +
 //	    		" child, " + adultPsg + " adult, " + infantPsg + " infant, class: " + flightClass);
-	    FlightSearchImpl impl = new FlightSearchImplProxy();
-	    Calendar boardingMin = Calendar.getInstance();
-	    boardingMin.setTime(departureDateMin);
-	    
-	    Calendar boardingMax = Calendar.getInstance();
-	    boardingMax.setTime(departureDateMin);
-	    
-//		Flight[] flights = impl.findFlightByBoarding(boardingMin, boardingMax, origin, destination)
+	    FlightSearchImpl impl = new FlightSearchImpl();
+//	    Calendar boardingMin = Calendar.getInstance();
+//	    boardingMin.setTime(departureDateMin);
+//	    
+//	    Calendar boardingMax = Calendar.getInstance();
+//	    boardingMax.setTime(departureDateMin);
+
+		Flight[] flights = impl.findFlightByBoarding(departureDateMin, departureDateMax, new Airport(origin), new Airport(destination));
 	}
 }

@@ -16,7 +16,7 @@
       <bpmn:incoming>SequenceFlow_0tcl95n</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0jcfd4j</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:startEvent id="StartEvent_01n7e7j">
+    <bpmn:startEvent id="StartEvent_01n7e7j" camunda:formKey="embedded:app:forms/flight-search.html">
       <bpmn:outgoing>SequenceFlow_0tcl95n</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="SequenceFlow_0c8yb6u" sourceRef="Task_1th01tj" targetRef="EndEvent_0w9wwxp" />

@@ -6,8 +6,10 @@ import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.camunda.bpm.engine.impl.bpmn.delegate.JavaDelegateInvocation;
 
+import id.booking.flight.entity.Flight;
+import id.booking.flight.entity.User;
 import id.booking.flight.service.soap.impl.ManageBookingImpl;
-import id.booking.flight.service.soap.impl.ManageBookingImplProxy;
+//import id.booking.flight.service.soap.impl.ManageBookingImplProxy;
 
 public class ManageBookingDelegate implements JavaDelegate {
 	
@@ -21,10 +23,10 @@ public class ManageBookingDelegate implements JavaDelegate {
 		Integer flightId = (Integer) execution.getVariable("flightId");
 		String passengerName = (String) execution.getVariable("passengerName");
 		
-		ManageBookingImpl impl = new ManageBookingImplProxy();
+		ManageBookingImpl impl = new ManageBookingImpl();
 		
-//		boolean status = impl.createBookingAndInvoice(customer, flight, passengerName)
-//		execution.setVariable("status", status);
+		boolean status = impl.createBookingAndInvoice(new User(user_id), new Flight(flightId), passengerName);
+		execution.setVariable("status", status);
 // TODO: expose search user, flight, location, invoice ke service. 
 		
 	}
