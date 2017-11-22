@@ -42,5 +42,10 @@ public class FlightSearchDelegate implements JavaDelegate{
 //	    boardingMax.setTime(departureDateMin);
 
 		Flight[] flights = impl.findFlightByBoarding(departureDateMin, departureDateMax, new Airport(origin), new Airport(destination));
+		
+		if (flights != null) 
+			execution.setVariable("flightId", flights[0].getId());
+		else
+			execution.setVariable("flightId", 1);
 	}
 }
