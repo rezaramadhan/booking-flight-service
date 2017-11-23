@@ -24,11 +24,13 @@ public class FlightSearchDelegate implements JavaDelegate{
 		
 		int origin = Integer.parseInt(execution.getVariable("origin").toString());
 		int destination = Integer.parseInt(execution.getVariable("destination").toString());
-
+		System.out.println("origin" + origin);
+		System.out.println("origin" + destination);
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd"); 
 		Date departureDateMin = df.parse(execution.getVariable("departureDateMax").toString());
         Date departureDateMax = df.parse(execution.getVariable("departureDateMin").toString());
-
+        System.out.println("datemin" + departureDateMin);
+        System.out.println("datemax" + departureDateMax);
 		LOGGER.info("Processing request by '" + execution.getVariable("userId") + "'...");
 	    
 //	    LOGGER.info("Searching flight with parameters origin: " + origin + " destination: " +
@@ -43,7 +45,7 @@ public class FlightSearchDelegate implements JavaDelegate{
 
 		Flight[] flights = impl.findFlightByBoarding(departureDateMin, departureDateMax, new Airport(origin), new Airport(destination));
 		
-		if (flights != null) 
+		if (flights != null && flights.length != 0) 
 			execution.setVariable("flightId", flights[0].getId());
 		else
 			execution.setVariable("flightId", 1);

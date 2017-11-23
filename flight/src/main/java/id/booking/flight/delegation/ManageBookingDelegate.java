@@ -20,7 +20,7 @@ public class ManageBookingDelegate implements JavaDelegate {
 		LOGGER.info("Calling class id.booking.flight.delegation.ManageBookingDelegate");
 	    LOGGER.info("Processing request by '" + execution.getVariable("user_id") + "'...");
 		
-		Integer user_id = (Integer) execution.getVariable("user_id");
+		Integer user_id = (Integer) execution.getVariable("customerId");
 		Integer flightId = (Integer) execution.getVariable("flightId");
 		String passengerName = (String) execution.getVariable("passengerName");
 		

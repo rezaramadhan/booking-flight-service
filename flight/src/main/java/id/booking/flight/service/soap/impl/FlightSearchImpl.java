@@ -1,5 +1,6 @@
 package id.booking.flight.service.soap.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
@@ -17,8 +18,11 @@ public class FlightSearchImpl implements FlightSearchService {
 	 * */
 	@Override
 	public Flight[] findFlightByBoarding(Date boardingTimeMin, Date boardingTimeMax, Airport departure, Airport destination) {
-		String query = "select Id from flight where BoardingTime <= '" + boardingTimeMax +
-			"' and BoardingTime >= '" + boardingTimeMin + "' and DepartureId = " + departure.getId() + " and DestinationId = " + destination.getId();
+		String formattedDate1 = new SimpleDateFormat("yyyy-MM-dd").format(boardingTimeMin);
+        String formattedDate2 = new SimpleDateFormat("yyyy-MM-dd").format(boardingTimeMax);
+        
+		String query = "select Id from flight where BoardingTime <= '" + formattedDate2 +
+			"' and BoardingTime >= '" + formattedDate1 + "' and DepartureId = " + departure.getId() + " and DestinationId = " + destination.getId();
         System.out.println("QUERY: " + query);
 		ArrayList<Map<String, String>> results;
 		try {
@@ -33,7 +37,7 @@ public class FlightSearchImpl implements FlightSearchService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+		return new Flight[0];
 	}
 
 }
