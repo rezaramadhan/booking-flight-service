@@ -132,5 +132,20 @@ public class FlightImpl implements FlightService {
 		}
 		return null;
 	}
+	
+	@Override
+	public void reduceQuota(int id) {
+		Flight f = new Flight(id);
+		int quota = f.getQuota();
+		if (quota > 0) {
+			String query = "update flight set Quota = " + (quota-1) + " where Id = " + id;
+			try {
+				sqlAccessor.runQuery(dbName, query);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 
 }

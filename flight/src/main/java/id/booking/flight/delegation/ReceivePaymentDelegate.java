@@ -16,9 +16,9 @@ public class ReceivePaymentDelegate implements JavaDelegate{
 	public void execute(DelegateExecution execution) throws Exception {
 		LOGGER.info("Calling class id.booking.flight.delegation.ReceivePaymentDelegate");
 		
-		Integer booking_code = (Integer) execution.getVariable("invoice_id");
+		Integer invoice_id = (Integer) execution.getVariable("invoiceId");
 		PaymentManagementImpl impl = new PaymentManagementImpl();
-		boolean status = impl.receivePaymentData(new Invoice(booking_code));
+		boolean status = impl.receivePaymentData(new Invoice(invoice_id));
 		execution.setVariable("status", status);
 
 	}

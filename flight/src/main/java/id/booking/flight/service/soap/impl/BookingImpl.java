@@ -30,4 +30,13 @@ public class BookingImpl implements BookingService {
 		return true;
 	}
 
+	@Override
+	public boolean changeBookingStatus(Booking booking, String status) {
+		try {
+			booking.setStatus(status);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
 }

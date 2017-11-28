@@ -1,5 +1,6 @@
 package id.booking.flight.service.soap.impl;
 
+import id.booking.flight.entity.Booking;
 import id.booking.flight.entity.Invoice;
 import id.booking.flight.service.task.PaymentManagementService;
 import id.booking.flight.service.soap.impl.InvoiceImpl;
@@ -13,6 +14,13 @@ public class PaymentManagementImpl implements PaymentManagementService {
 		// TODO Auto-generated method stub\
 		InvoiceImpl invoice_impl = new InvoiceImpl();
 		if (!invoice_impl.setInvoicePaid(invoice)) {
+			return false;
+		}
+
+		Booking b = invoice.getBooking();
+		System.out.println("BOOKING: " + b.getId() + " " + b.getPassengerName());
+		BookingImpl impl = new BookingImpl();
+		if(!impl.changeBookingStatus(b, "paid")) {
 			return false;
 		}
 		

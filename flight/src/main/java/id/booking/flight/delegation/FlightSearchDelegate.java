@@ -20,34 +20,46 @@ public class FlightSearchDelegate implements JavaDelegate{
 
 	public void execute(DelegateExecution execution) throws Exception {
 		LOGGER.info("Calling class id.booking.flight.delegation.FlightSearchDelegate");
-		LOGGER.info("Processing request by '" + execution.getVariable("customerId") + "'...");
+//		LOGGER.info("Processing request by '" + execution.getVariable("customerId") + "'...");
+//		LOGGER.info("Processing filter request...");
 		
 		int origin = Integer.parseInt(execution.getVariable("origin").toString());
 		int destination = Integer.parseInt(execution.getVariable("destination").toString());
 		System.out.println("origin" + origin);
-		System.out.println("origin" + destination);
+		System.out.println("destination" + destination);
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd"); 
-		Date departureDateMin = df.parse(execution.getVariable("departureDateMax").toString());
-        Date departureDateMax = df.parse(execution.getVariable("departureDateMin").toString());
+		Date departureDateMax = df.parse(execution.getVariable("departureDateMax").toString());
+        Date departureDateMin = df.parse(execution.getVariable("departureDateMin").toString());
         System.out.println("datemin" + departureDateMin);
         System.out.println("datemax" + departureDateMax);
-		LOGGER.info("Processing request by '" + execution.getVariable("userId") + "'...");
+        LOGGER.info("INPUT Origin: " + origin + " | Destination: " + destination + " | Dept min: "
+        		+ departureDateMin + " | Dept max: " + departureDateMax);
+        LOGGER.info("Processing filter request...");
 	    
 //	    LOGGER.info("Searching flight with parameters origin: " + origin + " destination: " +
 //	    		destination + " departure date: " + departureDate	 + " number of passengers: " + childPsg +
 //	    		" child, " + adultPsg + " adult, " + infantPsg + " infant, class: " + flightClass);
-	    FlightSearchImpl impl = new FlightSearchImpl();
 //	    Calendar boardingMin = Calendar.getInstance();
 //	    boardingMin.setTime(departureDateMin);
 //	    
 //	    Calendar boardingMax = Calendar.getInstance();
 //	    boardingMax.setTime(departureDateMin);
 
+	    FlightSearchImpl impl = new FlightSearchImpl();
 		Flight[] flights = impl.findFlightByBoarding(departureDateMin, departureDateMax, new Airport(origin), new Airport(destination));
+		LOGGER.info("Result length: " + flights.length);
 		
-		if (flights != null && flights.length != 0) 
+		if (flights != null && flights.length != 0) {
+			for (int i = 0; i < flights.length; i++) {
+				LOGGER.info("Id: " + Integer.toString(flights[i].getId()) + " | Company: " + flights[i].getCompany() +
+					" | Price: " + Double.toString(flights[i].getPrice()) + " | Quality: " +
+					flights[i].getBoardingTime() + " | Origin: " + flights[i].getDepartureId().getName()
+					+ " | Destination: " + flights[i].getDestinationId().getName());
+			}
 			execution.setVariable("flightId", flights[0].getId());
-		else
+		} else {
+			LOGGER.info("No result");
 			execution.setVariable("flightId", 1);
+		}
 	}
 }

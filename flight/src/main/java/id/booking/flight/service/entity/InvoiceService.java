@@ -9,4 +9,5 @@ public interface InvoiceService {
 	public boolean setInvoicePaid(Invoice invoice);
 	public boolean deleteInvoice(Invoice invoice);
     public boolean sendInvoice(User customer, Invoice invoice);
+    public Invoice getInvoiceByBookingId(int bookingId);
 }
