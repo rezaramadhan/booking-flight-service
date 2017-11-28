@@ -22,7 +22,7 @@ public class MySQLAccess {
     		try {
             Class.forName("com.mysql.jdbc.Driver");
             String connString = "jdbc:mysql://localhost/" + dbName;
-            connect = DriverManager.getConnection(connString, "root", "password");
+            connect = DriverManager.getConnection(connString, "root", "");
             statement = connect.createStatement();
             
           // PreparedStatements can use variables and are more efficient
@@ -52,7 +52,7 @@ public class MySQLAccess {
     		try {
 	        Class.forName("com.mysql.jdbc.Driver");
 	        String connString = "jdbc:mysql://localhost/" + dbName;
-            connect = DriverManager.getConnection(connString, "root", "password");
+            connect = DriverManager.getConnection(connString, "root", "");
 	        statement = connect.createStatement();
 	        resultSet = statement.executeQuery(query);
 	        while (resultSet.next()) {

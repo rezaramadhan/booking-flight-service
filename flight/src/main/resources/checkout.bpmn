@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.11.2">
+  <bpmn:collaboration id="Collaboration_0vjbtwz">
+    <bpmn:participant id="Participant_0fcy2fp" name="Checkout" processRef="Checkout_1" />
+  </bpmn:collaboration>
+  <bpmn:process id="Checkout_1" name="Checkout" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" camunda:formKey="embedded:app:forms/checkout.html">
+      <bpmn:outgoing>SequenceFlow_0iozefv</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0iozefv" sourceRef="StartEvent_1" targetRef="Task_19kl0cc" />
+    <bpmn:sequenceFlow id="SequenceFlow_0phubdv" sourceRef="Task_19kl0cc" targetRef="Task_0kmplgv" />
+    <bpmn:endEvent id="EndEvent_1023z1o">
+      <bpmn:incoming>SequenceFlow_1n4lyog</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_1n4lyog" sourceRef="Task_0kmplgv" targetRef="EndEvent_1023z1o" />
+    <bpmn:serviceTask id="Task_19kl0cc" name="Checkout" camunda:class="id.booking.flight.delegation.CheckoutDelegate">
+      <bpmn:incoming>SequenceFlow_0iozefv</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0phubdv</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_0kmplgv" name="Receive Payment" camunda:class="id.booking.flight.delegation.ReceivePaymentDelegate">
+      <bpmn:incoming>SequenceFlow_0phubdv</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1n4lyog</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0vjbtwz">
+      <bpmndi:BPMNShape id="Participant_0fcy2fp_di" bpmnElement="Participant_0fcy2fp">
+        <dc:Bounds x="293" y="181" width="600" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="363" y="289" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="336" y="325" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0iozefv_di" bpmnElement="SequenceFlow_0iozefv">
+        <di:waypoint xsi:type="dc:Point" x="399" y="307" />
+        <di:waypoint xsi:type="dc:Point" x="475" y="307" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="437" y="285.5" width="0" height="13" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0phubdv_di" bpmnElement="SequenceFlow_0phubdv">
+        <di:waypoint xsi:type="dc:Point" x="575" y="307" />
+        <di:waypoint xsi:type="dc:Point" x="670" y="307" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="622.5" y="285.5" width="0" height="13" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_1023z1o_di" bpmnElement="EndEvent_1023z1o">
+        <dc:Bounds x="835" y="289" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="853" y="328" width="0" height="13" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1n4lyog_di" bpmnElement="SequenceFlow_1n4lyog">
+        <di:waypoint xsi:type="dc:Point" x="770" y="307" />
+        <di:waypoint xsi:type="dc:Point" x="835" y="307" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="802.5" y="285.5" width="0" height="13" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_0wtobh3_di" bpmnElement="Task_19kl0cc">
+        <dc:Bounds x="475" y="267" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_1grzl7o_di" bpmnElement="Task_0kmplgv">
+        <dc:Bounds x="670" y="267" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

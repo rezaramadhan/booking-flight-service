@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import id.booking.flight.entity.Airport;
 import id.booking.flight.entity.Flight;
@@ -13,6 +14,7 @@ import id.booking.flight.service.task.FlightSearchService;
 public class FlightSearchImpl implements FlightSearchService {
     private static final MySQLAccess sqlAccessor = new MySQLAccess();
     private static final String dbName = "booking_domain";
+	private final static Logger LOGGER = Logger.getLogger("FLIGHT-SEARCH");
 	
 	/* Find flight yang punya departure antara boarding time tertentu AND punya destination & departure tertentu
 	 * */
@@ -22,8 +24,10 @@ public class FlightSearchImpl implements FlightSearchService {
         String formattedDate2 = new SimpleDateFormat("yyyy-MM-dd").format(boardingTimeMax);
         
 		String query = "select Id from flight where BoardingTime <= '" + formattedDate2 +
-			"' and BoardingTime >= '" + formattedDate1 + "' and DepartureId = " + departure.getId() + " and DestinationId = " + destination.getId();
+			"' and BoardingTime >= '" + formattedDate1 + "' and DepartureId = " + departure.getId()
+			+ " and DestinationId = " + destination.getId();
         System.out.println("QUERY: " + query);
+        LOGGER.info("QUERY: " + query);
 		ArrayList<Map<String, String>> results;
 		try {
 			results = sqlAccessor.runSelectQuery(dbName, query);

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.11.2">
+  <bpmn:collaboration id="Collaboration_1emncpm">
+    <bpmn:participant id="Participant_1ytr0ps" name="Cancel Booking" processRef="Cancel_Booking_1" />
+  </bpmn:collaboration>
+  <bpmn:process id="Cancel_Booking_1" name="Cancel Booking" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" camunda:formKey="embedded:app:forms/cancel-booking.html">
+      <bpmn:outgoing>SequenceFlow_0swm5oz</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0swm5oz" sourceRef="StartEvent_1" targetRef="Task_0uu3n0l" />
+    <bpmn:serviceTask id="Task_0uu3n0l" name="Cancel Booking" camunda:class="id.booking.flight.delegation.CancelBookingDelegate">
+      <bpmn:incoming>SequenceFlow_0swm5oz</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_101f64d</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_101f64d" sourceRef="Task_0uu3n0l" targetRef="Task_0d5q4a7" />
+    <bpmn:serviceTask id="Task_0d5q4a7" name="Delete Invoice" camunda:class="id.booking.flight.delegation.DeleteInvoiceDelegate">
+      <bpmn:incoming>SequenceFlow_101f64d</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_19nybco</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="EndEvent_0tf0bju">
+      <bpmn:incoming>SequenceFlow_19nybco</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_19nybco" sourceRef="Task_0d5q4a7" targetRef="EndEvent_0tf0bju" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1emncpm">
+      <bpmndi:BPMNShape id="Participant_1ytr0ps_di" bpmnElement="Participant_1ytr0ps">
+        <dc:Bounds x="329" y="156" width="600" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="394" y="261" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="367" y="297" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0swm5oz_di" bpmnElement="SequenceFlow_0swm5oz">
+        <di:waypoint xsi:type="dc:Point" x="430" y="279" />
+        <di:waypoint xsi:type="dc:Point" x="506" y="279" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="468" y="257.5" width="0" height="13" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_0bouz9k_di" bpmnElement="Task_0uu3n0l">
+        <dc:Bounds x="506" y="239" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_101f64d_di" bpmnElement="SequenceFlow_101f64d">
+        <di:waypoint xsi:type="dc:Point" x="606" y="279" />
+        <di:waypoint xsi:type="dc:Point" x="658" y="279" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="632" y="257" width="0" height="13" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_03tag1b_di" bpmnElement="Task_0d5q4a7">
+        <dc:Bounds x="658" y="239" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_0tf0bju_di" bpmnElement="EndEvent_0tf0bju">
+        <dc:Bounds x="816" y="261" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="834" y="300" width="0" height="13" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_19nybco_di" bpmnElement="SequenceFlow_19nybco">
+        <di:waypoint xsi:type="dc:Point" x="758" y="279" />
+        <di:waypoint xsi:type="dc:Point" x="816" y="279" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="787" y="257" width="0" height="13" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

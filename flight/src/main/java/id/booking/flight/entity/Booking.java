@@ -61,7 +61,7 @@ public class Booking implements Serializable {
 
     public Booking(Integer id) {
         this.id = id;
-        String query = "select * from booking where id = " +id +"";
+        String query = "select * from bookings where id = " +id +"";
         Map<String, String> results;
 		try {
 			results = sqlAccessor.runSelectQuery(dbName, query).get(0);
@@ -204,7 +204,7 @@ public class Booking implements Serializable {
     }
     
     public void deleteBooking() {
-    	 String query = "DELETE FROM bookings WHERE Id = '" + this.id;
+    	 String query = "DELETE FROM bookings WHERE Id = " + this.id;
          try {
  			sqlAccessor.runQuery(dbName, query);
  		} catch (Exception e) {

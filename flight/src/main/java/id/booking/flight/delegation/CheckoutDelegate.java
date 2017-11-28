@@ -16,11 +16,11 @@ public class CheckoutDelegate implements JavaDelegate {
 	public void execute(DelegateExecution execution) throws Exception {
 		LOGGER.info("Calling class id.booking.flight.delegation.CheckoutDelegate");
 		
-		Integer user_id = (Integer) execution.getVariable("user_id");
-		Integer booking_code = (Integer) execution.getVariable("invoice_id");
+		Integer user_id = (Integer) execution.getVariable("userId");
+		Integer invoice_id = (Integer) execution.getVariable("invoiceId");
 		
 		PaymentManagementImpl impl = new PaymentManagementImpl();
-		boolean status = impl.createPaymentRequest(new Invoice(booking_code));
+		boolean status = impl.createPaymentRequest(new Invoice(invoice_id));
 		execution.setVariable("status", status);
 	}
 

@@ -12,4 +12,5 @@ public interface FlightService {
     public Flight[] findBoardingTimeRange(Date boardTimeMin, Date boardTimeMax);
     public Flight[] findByDepartureLocation(Airport loc);
     public Flight[] findByDestinationLocation(Airport loc);
+    public void reduceQuota(int id);
 }

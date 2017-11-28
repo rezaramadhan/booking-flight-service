@@ -4,44 +4,44 @@
     <bpmn:participant id="Flight_Booking_1" name="Ticket Seller" processRef="Booking_1" />
   </bpmn:collaboration>
   <bpmn:process id="Booking_1" isExecutable="true">
-    <bpmn:sequenceFlow id="SequenceFlow_1gzak2e" sourceRef="Task_01yw8uy" targetRef="Task_1th01tj" />
     <bpmn:sequenceFlow id="SequenceFlow_1xcbgjn" sourceRef="Task_1b89smx" targetRef="Task_01yw8uy" />
     <bpmn:sequenceFlow id="SequenceFlow_0jcfd4j" sourceRef="Task_0tc571m" targetRef="Task_1b89smx" />
     <bpmn:sequenceFlow id="SequenceFlow_0tcl95n" sourceRef="StartEvent_01n7e7j" targetRef="Task_0tc571m" />
-    <bpmn:serviceTask id="Task_1th01tj" name="Receive Payment" camunda:class="id.booking.flight.delegation.ReceivePaymentDelegate">
-      <bpmn:incoming>SequenceFlow_1gzak2e</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_0c8yb6u</bpmn:outgoing>
-    </bpmn:serviceTask>
-    <bpmn:serviceTask id="Task_0tc571m" name="Flight Search" camunda:class="id.booking.flight.delegation.FlightSearchDelegate">
-      <bpmn:incoming>SequenceFlow_0tcl95n</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_0jcfd4j</bpmn:outgoing>
-    </bpmn:serviceTask>
-    <bpmn:startEvent id="StartEvent_01n7e7j" camunda:formKey="embedded:app:forms/flight-search.html">
-      <bpmn:outgoing>SequenceFlow_0tcl95n</bpmn:outgoing>
-    </bpmn:startEvent>
     <bpmn:sequenceFlow id="SequenceFlow_0c8yb6u" sourceRef="Task_1th01tj" targetRef="EndEvent_0w9wwxp" />
-    <bpmn:endEvent id="EndEvent_0w9wwxp">
-      <bpmn:incoming>SequenceFlow_0c8yb6u</bpmn:incoming>
-    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_1gzak2e" sourceRef="Task_01yw8uy" targetRef="Task_1th01tj" />
+    <bpmn:serviceTask id="Task_1b89smx" name="Manage Booking" camunda:class="id.booking.flight.delegation.ManageBookingDelegate">
+      <bpmn:incoming>SequenceFlow_0jcfd4j</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1xcbgjn</bpmn:outgoing>
+    </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_01yw8uy" name="Checkout" camunda:class="id.booking.flight.delegation.CheckoutDelegate">
       <bpmn:incoming>SequenceFlow_1xcbgjn</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1gzak2e</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="Task_1b89smx" name="Manage Booking" camunda:class="id.booking.flight.delegation.ManageBookingDelegate">
-      <bpmn:incoming>SequenceFlow_0jcfd4j</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_1xcbgjn</bpmn:outgoing>
+    <bpmn:endEvent id="EndEvent_0w9wwxp">
+      <bpmn:incoming>SequenceFlow_0c8yb6u</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:startEvent id="StartEvent_01n7e7j" camunda:formKey="embedded:app:forms/flight-search.html">
+      <bpmn:outgoing>SequenceFlow_0tcl95n</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="Task_0tc571m" name="Flight Search" camunda:class="id.booking.flight.delegation.FlightSearchDelegate">
+      <bpmn:incoming>SequenceFlow_0tcl95n</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0jcfd4j</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_1th01tj" name="Receive Payment" camunda:class="id.booking.flight.delegation.ReceivePaymentDelegate">
+      <bpmn:incoming>SequenceFlow_1gzak2e</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0c8yb6u</bpmn:outgoing>
     </bpmn:serviceTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Flight_Booking">
       <bpmndi:BPMNShape id="Participant_1sf2zdi_di" bpmnElement="Flight_Booking_1">
-        <dc:Bounds x="-75" y="149" width="1110.910931174089" height="303" />
+        <dc:Bounds x="-75" y="149" width="1111" height="303" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0tcl95n_di" bpmnElement="SequenceFlow_0tcl95n">
         <di:waypoint xsi:type="dc:Point" x="21" y="292" />
         <di:waypoint xsi:type="dc:Point" x="70" y="292" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="0.5" y="271" width="90" height="12" />
+          <dc:Bounds x="1" y="271" width="90" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ServiceTask_0ultoac_di" bpmnElement="Task_0tc571m">
@@ -51,7 +51,7 @@
         <di:waypoint xsi:type="dc:Point" x="170" y="292" />
         <di:waypoint xsi:type="dc:Point" x="409" y="292" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="244.5" y="271" width="90" height="12" />
+          <dc:Bounds x="245" y="271" width="90" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1xcbgjn_di" bpmnElement="SequenceFlow_1xcbgjn">
@@ -65,7 +65,7 @@
         <di:waypoint xsi:type="dc:Point" x="679" y="292" />
         <di:waypoint xsi:type="dc:Point" x="780" y="292" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="684.5" y="271" width="90" height="12" />
+          <dc:Bounds x="685" y="271" width="90" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ServiceTask_19f3q2y_di" bpmnElement="Task_1b89smx">
@@ -80,20 +80,20 @@
       <bpmndi:BPMNShape id="StartEvent_1ehu0c8_di" bpmnElement="StartEvent_01n7e7j">
         <dc:Bounds x="-15" y="274" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="-42" y="314" width="0" height="12" />
+          <dc:Bounds x="-87" y="314" width="90" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="EndEvent_0w9wwxp_di" bpmnElement="EndEvent_0w9wwxp">
-        <dc:Bounds x="938.910931174089" y="274" width="36" height="36" />
+        <dc:Bounds x="939" y="274" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="956.910931174089" y="314" width="0" height="12" />
+          <dc:Bounds x="912" y="314" width="90" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0c8yb6u_di" bpmnElement="SequenceFlow_0c8yb6u">
         <di:waypoint xsi:type="dc:Point" x="880" y="292" />
         <di:waypoint xsi:type="dc:Point" x="939" y="292" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="909.5" y="271" width="0" height="12" />
+          <dc:Bounds x="865" y="271" width="90" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>

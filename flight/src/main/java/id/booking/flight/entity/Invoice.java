@@ -24,7 +24,7 @@ public class Invoice implements Serializable {
 	
 	public Invoice(int id) {
 		this.id = id;
-        String query = "select * from flight where id = " +id +"";
+        String query = "select * from invoice where id = " +id +"";
         Map<String, String> results;
 		try {
 			results = sqlAccessor.runSelectQuery(dbName, query).get(0);
@@ -102,6 +102,22 @@ public class Invoice implements Serializable {
    	 String query = "DELETE FROM invoice WHERE Id = '" + this.id;
         try {
 			sqlAccessor.runQuery(dbName, query);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+   }
+    
+   public void getByBookingId(int bookingId) {
+       String query = "select * from invoice where bookingId = " + bookingId;
+       Map<String, String> results;
+		try {
+			results = sqlAccessor.runSelectQuery(dbName, query).get(0);
+	        System.out.println(results);
+	        this.id = Integer.parseInt(results.get("Id"));
+	        this.isPaid = Boolean.parseBoolean(results.get("isPaid"));
+	        this.user = new User(Integer.parseInt(results.get("userId")));
+	        this.booking = new Booking(bookingId);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
