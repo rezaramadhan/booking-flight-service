@@ -99,7 +99,7 @@ public class Invoice implements Serializable {
 	}
 	
     public void delete() {
-   	 String query = "DELETE FROM invoice WHERE Id = '" + this.id;
+   	 String query = "DELETE FROM invoice WHERE Id = " + this.id;
         try {
 			sqlAccessor.runQuery(dbName, query);
 		} catch (Exception e) {

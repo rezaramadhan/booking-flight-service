@@ -34,10 +34,10 @@
     <bpmn:sequenceFlow id="SequenceFlow_0swm5oz" sourceRef="StartEvent_1" targetRef="Task_0uu3n0l" />
     <bpmn:sequenceFlow id="SequenceFlow_1kg0xbe" sourceRef="Task_16bdwx5" targetRef="ExclusiveGateway_1lgwee3" />
     <bpmn:sequenceFlow id="SequenceFlow_05to6qh" name="Yes" sourceRef="ExclusiveGateway_1lgwee3" targetRef="Task_01jw1o0">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${isApproved == 'Y'}]]></bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">{$isApproved == 'Y'}></bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_12cnv3u" name="No" sourceRef="ExclusiveGateway_1lgwee3" targetRef="Task_14njqtg">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${isApproved == 'N'}]]></bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">{$isApproved == 'N'}></bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_11x2180" sourceRef="Task_01jw1o0" targetRef="Task_0d5q4a7" />
     <bpmn:sequenceFlow id="SequenceFlow_0czixte" sourceRef="Task_0d5q4a7" targetRef="Task_14njqtg" />

@@ -14,7 +14,7 @@
     <bpmn:sequenceFlow id="SequenceFlow_0wz79gm" sourceRef="Task_1x6ve76" targetRef="Task_04csaek" />
     <bpmn:sequenceFlow id="SequenceFlow_19ko8mk" sourceRef="Task_1fdvtng" targetRef="Task_0cqxe3c" />
     <bpmn:sequenceFlow id="SequenceFlow_0x42f1h" name="Available" sourceRef="ExclusiveGateway_13cw1e4" targetRef="Task_1fdvtng">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${seatAvailable == 1'}]]></bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${seatAvailable == 1}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_0zmrjun" sourceRef="Task_0xpllrg" targetRef="ExclusiveGateway_13cw1e4" />
     <bpmn:sequenceFlow id="SequenceFlow_1y26e9v" sourceRef="Task_0bn6kdx" targetRef="Task_0xpllrg" />
