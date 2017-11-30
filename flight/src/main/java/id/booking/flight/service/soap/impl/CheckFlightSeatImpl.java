@@ -5,7 +5,6 @@ import id.booking.flight.service.task.CheckFlightSeatService;
 
 public class CheckFlightSeatImpl implements CheckFlightSeatService {
 
-	@Override
 	public int checkSeat(Flight flight) {
 		return flight.getQuota();
 	}

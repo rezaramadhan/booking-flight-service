@@ -12,13 +12,11 @@ public class InvoiceImpl implements InvoiceService {
 
 	/* Create invoice baru
 	 * */
-	@Override
 	public Invoice createInvoice(User customer, Booking booking) {
 		Invoice inv = new Invoice(customer, booking);
 		return inv;
 	}
 
-	@Override
 	public boolean setInvoicePaid(Invoice invoice) {
 		try {
 			invoice.setPaid(true);
@@ -28,7 +26,6 @@ public class InvoiceImpl implements InvoiceService {
 		return true;
 	}
 
-	@Override
 	public boolean deleteInvoice(Invoice invoice) {
 		try {
 			invoice.delete();
@@ -43,7 +40,6 @@ public class InvoiceImpl implements InvoiceService {
 	
 	/* Ini ngeprint ke log aja, harusnya sih ngirim via email gitu
 	 * */
-	@Override
 	public boolean sendInvoice(User customer, Invoice invoice) {
 		// TODO Auto-generated method stub
 		try {
@@ -56,7 +52,6 @@ public class InvoiceImpl implements InvoiceService {
 		return true;
 	}
 
-	@Override
 	public Invoice getInvoiceByBookingId(int bookingId) {
 		Invoice invoice = new Invoice();
 		invoice.getByBookingId(bookingId);	

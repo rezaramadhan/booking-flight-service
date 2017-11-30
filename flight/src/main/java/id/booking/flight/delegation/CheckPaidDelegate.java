@@ -6,28 +6,30 @@ import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.camunda.bpm.engine.impl.bpmn.delegate.JavaDelegateInvocation;
 
+import id.booking.flight.entity.Booking;
 import id.booking.flight.entity.Flight;
 import id.booking.flight.entity.Invoice;
+import id.booking.flight.service.soap.impl.BookingImpl;
 import id.booking.flight.service.soap.impl.CheckFlightSeatImpl;
 import id.booking.flight.service.soap.impl.PaymentManagementImpl;
 
-public class CheckSeatDelegate implements JavaDelegate {
+public class CheckPaidDelegate implements JavaDelegate {
 	
-	private final static Logger LOGGER = Logger.getLogger("CHECK SEAT");
+	private final static Logger LOGGER = Logger.getLogger("CHECK PAID");
 
 	public void execute(DelegateExecution execution) throws Exception {
-		LOGGER.info("Calling class id.booking.flight.delegation.CheckSeatDelegate");
+		LOGGER.info("Calling class id.booking.flight.delegation.CheckPaidDelegate");
 		
-		Integer flightId = (Integer) execution.getVariable("flightId");
+		Integer bookingId = (Integer) execution.getVariable("bookingId");
 		
-		CheckFlightSeatImpl impl = new CheckFlightSeatImpl();
-		int quota = impl.checkSeat(new Flight(flightId));
+		Booking b = new Booking(bookingId);
+		BookingImpl impl = new BookingImpl();
 		
-		if (quota < 1) {
-			execution.setVariable("seatAvailable", 0);
+		if (impl.isBookingPaid(b)) {
+			execution.setVariable("isBookingPaid", 1);
 		} else {
-			execution.setVariable("seatAvailable", 1);
-		}
+			execution.setVariable("isBookingPaid", 0);
+		}		
 	}
 
 }

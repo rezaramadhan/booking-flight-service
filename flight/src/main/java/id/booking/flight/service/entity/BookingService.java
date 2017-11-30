@@ -9,4 +9,5 @@ public interface BookingService {
 	public Booking modifyBooking(Booking booking, Flight flight, String passangerName);
 	public boolean cancelBooking(Booking booking);
 	public boolean changeBookingStatus(Booking booking, String status);
+	public boolean isBookingPaid(Booking booking);
 }

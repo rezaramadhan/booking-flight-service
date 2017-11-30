@@ -14,7 +14,6 @@ public class ManageBookingImpl implements ManageBookingService {
 
 	/* Ngecek apakah seat masih ada, terus baru create booking sama invoice, terus sendInvoice ke user
 	 * */
-	@Override
 	public boolean createBookingAndInvoice(User customer, Flight flight, String passengerName) {
 		// TODO Auto-generated method stub
 		CheckFlightSeatImpl check_flight_seat_impl = new CheckFlightSeatImpl();
@@ -44,7 +43,6 @@ public class ManageBookingImpl implements ManageBookingService {
 
 	/* Hapus booking & invoice
 	 * */
-	@Override
 	public boolean deleteBookingAndInvoice(Booking booking, Invoice invoice) {
 		// TODO Auto-generated method stub
 		BookingImpl booking_impl = new BookingImpl();

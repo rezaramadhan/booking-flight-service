@@ -18,7 +18,6 @@ public class FlightSearchImpl implements FlightSearchService {
 	
 	/* Find flight yang punya departure antara boarding time tertentu AND punya destination & departure tertentu
 	 * */
-	@Override
 	public Flight[] findFlightByBoarding(Date boardingTimeMin, Date boardingTimeMax, Airport departure, Airport destination) {
 		String formattedDate1 = new SimpleDateFormat("yyyy-MM-dd").format(boardingTimeMin);
         String formattedDate2 = new SimpleDateFormat("yyyy-MM-dd").format(boardingTimeMax);

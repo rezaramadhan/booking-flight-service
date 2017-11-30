@@ -9,7 +9,6 @@ public class PaymentManagementImpl implements PaymentManagementService {
 
 	/* Set ispaid di invoice jadi true, abis itu kirim invoice ke user
 	 * */
-	@Override
 	public boolean receivePaymentData(Invoice invoice) {
 		// TODO Auto-generated method stub\
 		InvoiceImpl invoice_impl = new InvoiceImpl();
@@ -35,7 +34,6 @@ public class PaymentManagementImpl implements PaymentManagementService {
 
 	/* Tulis di log kalo manggil service orang buat minta request pembayaran
 	 * */
-	@Override
 	public boolean createPaymentRequest(Invoice invoice) {
 		// TODO Auto-generated method stub
 		try {

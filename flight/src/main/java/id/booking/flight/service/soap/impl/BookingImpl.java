@@ -7,20 +7,17 @@ import id.booking.flight.service.entity.BookingService;
 
 public class BookingImpl implements BookingService {
 
-	@Override
 	public Booking createBooking(User user, Flight flight, String passengerName) {
 		Booking newBooking = new Booking("unpaid", passengerName, flight, user);
 		return newBooking;
 	}
 
-	@Override
 	public Booking modifyBooking(Booking booking, Flight flight, String passengerName) {
 		booking.setFlightId(flight);
 		booking.setPassengerName(passengerName);
 		return booking;
 	}
 
-	@Override
 	public boolean cancelBooking(Booking booking) {
 		try {
 			booking.deleteBooking();
@@ -30,7 +27,6 @@ public class BookingImpl implements BookingService {
 		return true;
 	}
 
-	@Override
 	public boolean changeBookingStatus(Booking booking, String status) {
 		try {
 			booking.setStatus(status);
@@ -38,5 +34,13 @@ public class BookingImpl implements BookingService {
 			return false;
 		}
 		return true;
+	}
+	
+	public boolean isBookingPaid(Booking booking) {
+		if (booking.getStatus() == "paid") {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
