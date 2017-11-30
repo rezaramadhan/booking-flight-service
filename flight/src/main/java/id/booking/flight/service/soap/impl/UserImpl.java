@@ -7,7 +7,6 @@ import id.booking.flight.service.entity.UserService;
 
 public class UserImpl implements UserService {
 
-	@Override
 	public boolean modifyUserData(User user, String password, String fullName) {
 		try	{
 			user.setPassword(password);
@@ -18,7 +17,6 @@ public class UserImpl implements UserService {
 		return true;
 	}
 
-	@Override
 	public User createNewUser(String fullName, String username, String password) {
 		User newUser = new User(username, fullName, password);
 		return newUser;

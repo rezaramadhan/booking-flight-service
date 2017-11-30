@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.11.2">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.11.2">
   <bpmn:collaboration id="Collaboration_130ori8">
-    <bpmn:participant id="Participant_1krmfh9" name="Edit Booking" processRef="Process_1" />
+    <bpmn:participant id="Participant_1krmfh9" name="Edit Booking" processRef="Edit_Booking_1" />
   </bpmn:collaboration>
-  <bpmn:process id="Process_1" isExecutable="true">
-    <bpmn:startEvent id="StartEvent_1">
+  <bpmn:process id="Edit_Booking_1" name="Edit Booking" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" camunda:formKey="embedded:app:forms/edit-booking.html">
       <bpmn:outgoing>SequenceFlow_0mu32vj</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:serviceTask id="Task_10soq51" name="Check Paid">
+    <bpmn:serviceTask id="Task_10soq51" name="Check Paid" camunda:class="id.booking.flight.delegation.CheckPaidDelegate">
       <bpmn:incoming>SequenceFlow_0mu32vj</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_00bnuzg</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:endEvent id="EndEvent_16twvgx">
       <bpmn:incoming>SequenceFlow_1xfvw7w</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:userTask id="Task_1kb3vup" name="Edit Booking">
+    <bpmn:userTask id="Task_1kb3vup" name="Edit Booking" camunda:formKey="embedded:app:forms/input-edit-booking.html" camunda:assignee="demo">
       <bpmn:incoming>SequenceFlow_0zrb5y7</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0gtm7wc</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:serviceTask id="Task_1aisa18" name="Update Booking Data">
+    <bpmn:serviceTask id="Task_1aisa18" name="Update Booking Data" camunda:class="id.booking.flight.delegation.UpdateBookingDelegate">
       <bpmn:incoming>SequenceFlow_0gtm7wc</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0bz21l0</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -29,15 +29,17 @@
     <bpmn:sequenceFlow id="SequenceFlow_00bnuzg" sourceRef="Task_10soq51" targetRef="ExclusiveGateway_037tbfk" />
     <bpmn:sequenceFlow id="SequenceFlow_0gtm7wc" sourceRef="Task_1kb3vup" targetRef="Task_1aisa18" />
     <bpmn:sequenceFlow id="SequenceFlow_0bz21l0" sourceRef="Task_1aisa18" targetRef="EndEvent_0gkdb19" />
-    <bpmn:parallelGateway id="ExclusiveGateway_037tbfk">
+    <bpmn:sequenceFlow id="SequenceFlow_0zrb5y7" name="Unpaid" sourceRef="ExclusiveGateway_037tbfk" targetRef="Task_1kb3vup">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${isBookingPaid == 0}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_1xfvw7w" name="Paid" sourceRef="ExclusiveGateway_037tbfk" targetRef="EndEvent_16twvgx">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${isBookingPaid == 1}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_037tbfk">
       <bpmn:incoming>SequenceFlow_00bnuzg</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0zrb5y7</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_1xfvw7w</bpmn:outgoing>
-    </bpmn:parallelGateway>
-    <bpmn:sequenceFlow id="SequenceFlow_0zrb5y7" name="Unpaid" sourceRef="ExclusiveGateway_037tbfk" targetRef="Task_1kb3vup">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" />
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_1xfvw7w" name="Paid" sourceRef="ExclusiveGateway_037tbfk" targetRef="EndEvent_16twvgx" />
+    </bpmn:exclusiveGateway>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_130ori8">
@@ -64,7 +66,7 @@
         <di:waypoint xsi:type="dc:Point" x="440" y="186" />
         <di:waypoint xsi:type="dc:Point" x="499" y="186" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="469.5" y="165" width="0" height="12" />
+          <dc:Bounds x="424.5" y="165" width="90" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="EndEvent_16twvgx_di" bpmnElement="EndEvent_16twvgx">
@@ -99,26 +101,26 @@
           <dc:Bounds x="729" y="277" width="0" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ParallelGateway_0lymlvm_di" bpmnElement="ExclusiveGateway_037tbfk">
-        <dc:Bounds x="499" y="161" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="524" y="215" width="0" height="12" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0zrb5y7_di" bpmnElement="SequenceFlow_0zrb5y7">
         <di:waypoint xsi:type="dc:Point" x="524" y="211" />
         <di:waypoint xsi:type="dc:Point" x="524" y="258" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="532" y="223" width="34" height="12" />
+          <dc:Bounds x="532" y="223" width="35" height="13" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1xfvw7w_di" bpmnElement="SequenceFlow_1xfvw7w">
         <di:waypoint xsi:type="dc:Point" x="549" y="186" />
         <di:waypoint xsi:type="dc:Point" x="644" y="186" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="586" y="165" width="21" height="12" />
+          <dc:Bounds x="585" y="165" width="23" height="13" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ExclusiveGateway_1vx66zc_di" bpmnElement="ExclusiveGateway_037tbfk" isMarkerVisible="true">
+        <dc:Bounds x="499" y="161" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="479" y="215" width="0" height="13" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
